@@ -1,5 +1,6 @@
 import './App.css'
 import React, { useState, useEffect } from 'react';
+
 import TheStrangerCover from './assets/TheStranger.png';
 import TravelCatCover from './assets/TravelCat.png';
 
@@ -9,9 +10,23 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [query, setQuery] = useState('');
 
-  const handleForm = (e:any) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  async function handleForm(e:any) {
     e.preventDefault();
-    console.log(query);
+    await getData();
+  }
+
+  async function getData() {
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`)
+    .then((response) => response.json())
+    .then((actualData) => {
+      console.log(actualData)
+    }).catch((error) => {
+      console.log("error: ", error);
+    })
   }
 
   return (
@@ -42,7 +57,8 @@ function App() {
               <h3>The Stranger</h3>
               <p>Albert Camus</p>
               <p>Started reading April 3</p>
-              <p>Progress: 90/122</p>
+              <label htmlFor="pages">Progress:</label>
+              <progress id="pages" max="100" value="70"></progress>
             </div>
           </section>
 
@@ -52,7 +68,8 @@ function App() {
               <h3>The Traveling Cat Chronicles</h3>
               <p>Hiro Arikawa</p>
               <p>Started reading April 9</p>
-              <p>Progress: 150/270</p>
+              <label htmlFor="pages">Progress:</label>
+              <progress id="pages" max="100" value="90"></progress>
             </div>
           </section>
         </section>
