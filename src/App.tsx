@@ -1,4 +1,6 @@
 import './App.css'
+import {Book, BookEntry} from './types';
+
 import React, { useState, useEffect } from 'react';
 
 import TheStrangerCover from './assets/TheStranger.png';
@@ -10,9 +12,9 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [query, setQuery] = useState('');
 
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [bookResults, setBookResults] = useState<Book[]>([]);
 
   async function handleForm(e:any) {
     e.preventDefault();
@@ -23,7 +25,16 @@ function App() {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`)
     .then((response) => response.json())
     .then((actualData) => {
-      console.log(actualData)
+      console.log(actualData.items);
+      let bookData = actualData.items;
+      let mappedData = bookData.map((item : any)=>({
+        "id": item.id,
+        "title": item.volumeInfo.title,
+        "author": item.volumeInfo.authors,
+        "pageCount": item.volumeInfo.pageCount
+      }));
+      setBookResults(mappedData);
+      return mappedData;
     }).catch((error) => {
       console.log("error: ", error);
     })

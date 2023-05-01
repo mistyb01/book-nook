@@ -1,14 +1,14 @@
 export type Book = {
     id: string,
     title: string,
-    author: string,
+    author: string[],
     pageCount: number,
     // yearPublished: number,
     // category: string[]
 }
 
 export type BookEntry = {
-    // the id is how book entries are connected w books.. 
+    // the id is how book entries are connected w books.
     // used an indexed access type 
     id: Book['id'], 
     status: "current" | "finished" | "tbr", // this is called a 'literal type'!
