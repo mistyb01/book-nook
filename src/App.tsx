@@ -1,7 +1,8 @@
 import './App.css'
+import React, { useState, useEffect } from 'react'; 
+import axios from 'axios';
 import {Book, BookEntry} from './types';
 
-import React, { useState, useEffect } from 'react';
 
 import TheStrangerCover from './assets/TheStranger.png';
 import TravelCatCover from './assets/TravelCat.png';
@@ -18,23 +19,25 @@ function App() {
   const [bookResults, setBookResults] = useState<Book[]>([]);
 
   async function handleForm(e:any) {
-    e.preventDefault();
-    const mappedData = await getData();
-    console.log("result:", mappedData);
+    try {
+      e.preventDefault();
+      const res = await getData();
+      console.log("fin:", res);
+    } catch(err) {
+      console.error("error: ", err);
+    }
     // TODO: Populate bookResults on the UI.
   }
 
   async function getData() {
-   await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`)
-    .then((response) => response.json())
-    .then((actualData) => {
-      console.log(actualData.items);
-      let mappedData = reformatResults(actualData.items);
-      setBookResults(mappedData);
+    try {
+      let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`);
+      let mappedData = reformatResults(response.data.items);
+      // setBookResults(mappedData);
       return mappedData;
-    }).catch((error) => {
-      console.log("error: ", error);
-    })
+    } catch(err) {
+      console.error("error: ", err);
+    }
   }
 
   function reformatResults(dataArray : []) : Book[] {
