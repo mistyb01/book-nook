@@ -6,6 +6,13 @@ import TravelCatCover from './assets/TravelCat.png';
 const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
 
 function App() {
+  const [showForm, setShowForm] = useState(false);
+  const [query, setQuery] = useState('');
+
+  const handleForm = (e:any) => {
+    e.preventDefault();
+    console.log(query);
+  }
 
   return (
     <>
@@ -17,8 +24,17 @@ function App() {
           <li>currently reading</li>
           <li>finished</li>
           <li>want to read</li>
-          <button>add new entry</button>
+          <button onClick={() => setShowForm(!showForm)}>add new entry</button>
         </ul>
+
+        {showForm && <section className="add-entry-form">
+          <form onSubmit={handleForm} className='spacer-x'>
+            <label htmlFor='searchInput'>search for a book by title or author</label>
+            <input type="text" name="searchInput" value={query} onChange={(e) => setQuery(e.target.value)}></input>
+            <button type="submit">go</button>
+          </form>
+        </section>}
+
         <section className="currently-reading spacer-y">
           <section className="tracker-entry">
             <img src={TheStrangerCover} className="tracker-entry-img"/>

@@ -12,6 +12,10 @@ main {
 
 header { text-align: center; }
 
+.spacer-x > * + * {
+    margin-left: 0.5rem;
+}
+
 .spacer-y > * + * {
     margin-top: 2rem;
 }
