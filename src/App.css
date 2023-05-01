@@ -1,0 +1,47 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    width: 60vw;
+    margin: 2rem auto;
+}
+
+header { text-align: center; }
+
+.spacer-y > * + * {
+    margin-top: 2rem;
+}
+
+/* reading tracker css */
+.tracker-tabs {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.currently-reading {
+    display: flex;
+    flex-direction: column;
+}
+
+.tracker-entry {
+    display: flex;
+    gap: 1rem;
+}
+
+.tracker-entry-img {
+    width: 8rem;
+    height: 12rem;
+}
+
+.tracker-entry-text {
+    align-self: flex-end;
+}
+.tracker-entry-text h3 {
+    font-size: 2rem;
+}
