@@ -14,30 +14,37 @@ function App() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [bookResults, setBookResults] = useState<Book[]>([]);
 
   async function handleForm(e:any) {
     e.preventDefault();
-    await getData();
+    const mappedData = await getData();
+    console.log("result:", mappedData);
+    // TODO: Populate bookResults on the UI.
   }
 
   async function getData() {
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`)
+   await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`)
     .then((response) => response.json())
     .then((actualData) => {
       console.log(actualData.items);
-      let bookData = actualData.items;
-      let mappedData = bookData.map((item : any)=>({
-        "id": item.id,
-        "title": item.volumeInfo.title,
-        "author": item.volumeInfo.authors,
-        "pageCount": item.volumeInfo.pageCount
-      }));
+      let mappedData = reformatResults(actualData.items);
       setBookResults(mappedData);
       return mappedData;
     }).catch((error) => {
       console.log("error: ", error);
     })
+  }
+
+  function reformatResults(dataArray : []) : Book[] {
+    let formattedData = dataArray.map((item : any)=>({
+      "id": item.id,
+      "title": item.volumeInfo.title,
+      "author": item.volumeInfo.authors,
+      "pageCount": item.volumeInfo.pageCount
+    }));
+    return formattedData;
   }
 
   return (
