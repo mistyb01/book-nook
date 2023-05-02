@@ -3,7 +3,6 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import axios from 'axios';
 import {Book, BookEntry} from './types';
 
-
 import TheStrangerCover from './assets/TheStranger.png';
 import TravelCatCover from './assets/TravelCat.png';
 
@@ -28,6 +27,7 @@ function App() {
       setLoading(true);
       const res = await getData();
       setLoading(false);
+      setBookResults(res as Book[]);
       console.log("fin:", res); 
     } catch(err) {
       console.error("error: ", err);
@@ -39,7 +39,6 @@ function App() {
       let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`);
       console.log(response.data);
       let mappedData = reformatResults(response.data.items);
-      setBookResults(mappedData); // would like to move this to handleForm
       return mappedData;
     } catch(err) {
       setError(err);
@@ -50,7 +49,8 @@ function App() {
     let formattedData = dataArray.map((item : any)=>({
       "id": item.id,
       "title": item.volumeInfo.title,
-      "author": item.volumeInfo.authors,
+      "authors": item.volumeInfo.authors,
+      "publisher": item.volumeInfo.publisher,
       "pageCount": item.volumeInfo.pageCount,
       "publishedDate": item.volumeInfo.publishedDate
     }));
@@ -72,21 +72,22 @@ function App() {
 
         {showForm && <section className="add-entry-form">
           <form onSubmit={handleForm} className='spacer-x'>
-            <label htmlFor='searchInput'>search for a book by title or author</label>
+            <label htmlFor='searchInput'>search for a book by title or authors</label>
             <input type="text" name="searchInput" value={query} onChange={(e) => setQuery(e.target.value)}></input>
             <button type="submit">go</button>
           </form>
         </section>}
 
         <section className="search-results spacer-y">
+          {bookResults && <button onClick={() => setBookResults(undefined)}>close</button>}
           {loading && <p>loading...</p>}
           {error && <p>Error: {error.message}</p>}
-          {bookResults && <button onClick={() => setBookResults(undefined)}>close</button>}
           {bookResults && bookResults.map((item) => (
             <div className="search-results-entry" key={item.id}>
               <h4>{item.title}</h4>
-              <p><span className="emphasize">author</span> {item.author[0]}</p>
-              <p><span className="emphasize">published</span> {item.publishedDate.substring(0,4)}</p>
+              {item.authors && <p><span className="emphasize">authors</span> {item.authors[0]}</p>}
+              {item.publisher && <p><span className="emphasize">publisher</span> {item.publisher}</p>}
+              <p><span className="emphasize">year</span> {item.publishedDate.substring(0,4)}</p>
             </div>))}
           </section>
 

@@ -1,7 +1,8 @@
 export type Book = {
     id: string,
     title: string,
-    author: string[],
+    authors: string[],
+    publisher: string,
     pageCount: number,
     publishedDate: string
     // yearPublished: number,
