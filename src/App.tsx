@@ -18,22 +18,22 @@ function App() {
 
   const [bookResults, setBookResults] = useState<Book[]>([]);
 
+  // TODO: is there a better way to write the functions of handleForm and getData?
   async function handleForm(e:any) {
     try {
       e.preventDefault();
       const res = await getData();
-      console.log("fin:", res);
+      console.log("fin:", res); 
     } catch(err) {
       console.error("error: ", err);
     }
-    // TODO: Populate bookResults on the UI.
   }
 
   async function getData() {
     try {
       let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`);
       let mappedData = reformatResults(response.data.items);
-      // setBookResults(mappedData);
+      setBookResults(mappedData); // would like to move this to handleForm
       return mappedData;
     } catch(err) {
       console.error("error: ", err);
@@ -70,6 +70,15 @@ function App() {
             <button type="submit">go</button>
           </form>
         </section>}
+
+        <section className="search-results spacer-y">
+          {bookResults && bookResults.map((item) => (
+            <div className="search-results-entry" key={item.id}>
+              <h4>{item.title}</h4>
+              <p><span className="emphasize">author</span> {item.author[0]}</p>
+              <p><span className="emphasize">pages</span> {item.pageCount}</p>
+            </div>))}
+          </section>
 
         <section className="currently-reading spacer-y">
           <section className="tracker-entry">

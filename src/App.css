@@ -12,12 +12,18 @@ main {
 
 header { text-align: center; }
 
+/* utility */
 .spacer-x > * + * {
     margin-left: 0.5rem;
 }
 
 .spacer-y > * + * {
     margin-top: 2rem;
+}
+
+.emphasize { 
+    font-weight:600;
+    color: rgb(195, 28, 87);
 }
 
 /* reading tracker css */
@@ -48,4 +54,11 @@ header { text-align: center; }
 }
 .tracker-entry-text h3 {
     font-size: 2rem;
+}
+
+/* search form + results */
+.search-results-entry {
+    border: 1px solid gray;
+    background-color: rgb(244, 244, 244);
+    padding: 0.5rem;
 }
