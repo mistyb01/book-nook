@@ -2,6 +2,7 @@ import TheStrangerCover from '../assets/TheStranger.png';
 import TravelCatCover from '../assets/TravelCat.png';
 import CurrentlyReadingEntry from './CurrentlyReadingEntry';
 
+// note: data taken in by CurrentlyReadingEntry should be type BookEntry
 const MOCKDATA = [
     {
         id: "1",

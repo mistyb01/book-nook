@@ -7,6 +7,7 @@ const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
 
 import CurrentlyReading from './components/CurrentlyReading';
 import TrackerHeader from './components/TrackerHeader';
+import SearchResult from './components/SearchResult';
 
 // TODO: gotta component-ize! 
 // TODO: see if theres a better replacement for the any's 
@@ -77,12 +78,14 @@ function App() {
           {loading && <p>loading...</p>}
           {error && <p>Error: {error.message}</p>}
           {bookResults && bookResults.map((item) => (
-            <div className="search-results-entry" key={item.id}>
-              <h4>{item.title}</h4>
-              {item.authors && <p><span className="emphasize">authors</span> {item.authors[0]}</p>}
-              {item.publisher && <p><span className="emphasize">publisher</span> {item.publisher}</p>}
-              <p><span className="emphasize">year</span> {item.publishedDate.substring(0,4)}</p>
-            </div>))}
+            <SearchResult 
+              id={item.id}
+              title={item.title}
+              authors={item.authors}
+              publisher={item.publisher}
+              publishedDate={item.publishedDate}
+              pageCount={item.pageCount}
+            />))}
           </section>
 
           <CurrentlyReading/>
