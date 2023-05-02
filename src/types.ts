@@ -3,6 +3,7 @@ export type Book = {
     title: string,
     author: string[],
     pageCount: number,
+    publishedDate: string
     // yearPublished: number,
     // category: string[]
 }
