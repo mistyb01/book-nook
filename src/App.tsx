@@ -3,14 +3,11 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import axios from 'axios';
 import {Book, BookEntry} from './types';
 
-import TheStrangerCover from './assets/TheStranger.png';
-import TravelCatCover from './assets/TravelCat.png';
-
 const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
 
+import CurrentlyReading from './components/CurrentlyReading';
 // TODO: gotta component-ize! 
 // TODO: see if theres a better replacement for the any's 
-// TODO: app breaks with some search queries (like 'aaa')
 function App() {
   const [showForm, setShowForm] = useState(false);
   const [query, setQuery] = useState('');
@@ -91,29 +88,8 @@ function App() {
             </div>))}
           </section>
 
-        <section className="currently-reading spacer-y">
-          <section className="tracker-entry">
-            <img src={TheStrangerCover} className="tracker-entry-img"/>
-            <div className="tracker-entry-text">
-              <h3>The Stranger</h3>
-              <p>Albert Camus</p>
-              <p>Started reading April 3</p>
-              <label htmlFor="pages">Progress:</label>
-              <progress id="pages" max="100" value="70"></progress>
-            </div>
-          </section>
-
-          <section className="tracker-entry">
-            <img src={TravelCatCover} className="tracker-entry-img"/>
-            <div className="tracker-entry-text">
-              <h3>The Traveling Cat Chronicles</h3>
-              <p>Hiro Arikawa</p>
-              <p>Started reading April 9</p>
-              <label htmlFor="pages">Progress:</label>
-              <progress id="pages" max="100" value="90"></progress>
-            </div>
-          </section>
-        </section>
+          <CurrentlyReading/>
+          
       </main>
 
     </>
