@@ -6,6 +6,8 @@ import {Book, BookEntry} from './types';
 const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
 
 import CurrentlyReading from './components/CurrentlyReading';
+import TrackerHeader from './components/TrackerHeader';
+
 // TODO: gotta component-ize! 
 // TODO: see if theres a better replacement for the any's 
 function App() {
@@ -60,12 +62,7 @@ function App() {
         <h1>book nook</h1>
       </header>
       <main className='spacer-y'>
-        <ul className="tracker-tabs">
-          <li>currently reading</li>
-          <li>finished</li>
-          <li>want to read</li>
-          <button onClick={() => setShowForm(!showForm)}>add new entry</button>
-        </ul>
+        <TrackerHeader handleFormReveal={() => setShowForm(!showForm)}/>
 
         {showForm && <section className="add-entry-form">
           <form onSubmit={handleForm} className='spacer-x'>
