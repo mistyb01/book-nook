@@ -5,15 +5,27 @@ export type Book = {
     publisher: string,
     pageCount: number,
     publishedDate: string
-    // yearPublished: number,
     // category: string[]
 }
 
-export type BookEntry = {
-    // the id is how book entries are connected w books.
-    // used an indexed access type 
-    id: Book['id'], 
+export type BookEntryData = {
     status: "current" | "finished" | "tbr", // this is called a 'literal type'!
     pagesRead: number,
     userRating: 1 | 2 | 3 | 4 | 5, // literal type
+}
+
+ // BookEntry is an intersection-- 
+ // it must have ALL of the keys in both Book and BookEntryData 
+export type BookEntry = Book & BookEntryData;
+
+let testEntry : BookEntry = {
+    id: 'string',
+    title: 'string',
+    authors: [''],
+    publisher: 'string',
+    pageCount: 2,
+    publishedDate: 'string',
+    status: "current",
+    pagesRead: 1,
+    userRating: 1
 }
