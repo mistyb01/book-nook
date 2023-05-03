@@ -65,4 +65,11 @@ header { text-align: center; }
     border: 1px solid gray;
     background-color: rgb(244, 244, 244);
     padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    padding-left: 1rem;
+    padding-right: 1rem;
 }

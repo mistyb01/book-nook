@@ -18,14 +18,14 @@ export type BookEntryData = {
  // it must have ALL of the keys in both Book and BookEntryData 
 export type BookEntry = Book & BookEntryData;
 
-let testEntry : BookEntry = {
-    id: 'string',
-    title: 'string',
-    authors: [''],
-    publisher: 'string',
-    pageCount: 2,
-    publishedDate: 'string',
-    status: "current",
-    pagesRead: 1,
-    userRating: 1
-}
+// let testEntry : BookEntry = {
+//     id: 'string',
+//     title: 'string',
+//     authors: [''],
+//     publisher: 'string',
+//     pageCount: 2,
+//     publishedDate: 'string',
+//     status: "current",
+//     pagesRead: 1,
+//     userRating: 1
+// }
