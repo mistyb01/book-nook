@@ -6,15 +6,19 @@ import {Book, BookEntry} from './types';
 const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
 
 import CurrentlyReading from './components/CurrentlyReading';
+import FinishedList from './components/FinishedList';
+import ToReadList from './components/ToReadList';
+
 import TrackerHeader from './components/TrackerHeader';
 import SearchResult from './components/SearchResult';
 
 // TODO: gotta component-ize! 
 // TODO: see if theres a better replacement for the any's 
 function App() {
+  const [displayedList, setDisplayedList] = useState('current');
+
   const [showForm, setShowForm] = useState(false);
   const [query, setQuery] = useState('');
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null); 
 
@@ -63,7 +67,11 @@ function App() {
         <h1>book nook</h1>
       </header>
       <main className='spacer-y'>
-        <TrackerHeader handleFormReveal={() => setShowForm(!showForm)}/>
+        <TrackerHeader 
+        displayedList={displayedList}
+        handleFormReveal={() => setShowForm(!showForm)}
+        handleSetDisplayedList={(state: string) => setDisplayedList(state)}
+        />
 
         {showForm && <section className="add-entry-form">
           <form onSubmit={handleForm} className='spacer-x'>
@@ -88,7 +96,9 @@ function App() {
             />))}
           </section>
 
-          <CurrentlyReading/>
+          {displayedList === 'current' ? <CurrentlyReading/> :
+          displayedList === 'finished' ? <FinishedList/> :
+          <ToReadList/> }
           
       </main>
 

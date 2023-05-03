@@ -33,6 +33,10 @@ header { text-align: center; }
     justify-content: space-between;
 }
 
+.active-tab {
+    font-weight: 600;
+    border-bottom: 2px dotted rgb(195, 28, 87);
+}
 
 .currently-reading {
     display: flex;
