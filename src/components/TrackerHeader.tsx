@@ -1,15 +1,14 @@
 type Props = {
-    displayedList: string,
-    handleFormReveal: React.MouseEventHandler<HTMLElement>,
-    handleSetDisplayedList: Function
+    display: string,
+    handleSetDisplay: Function
 }
-const TrackerHeader = ({displayedList, handleFormReveal, handleSetDisplayedList}: Props) => {
+const TrackerHeader = ({display, handleSetDisplay}: Props) => {
     return (
         <ul className="tracker-tabs">
-        <li onClick={()=>handleSetDisplayedList('current')} className={`${ displayedList === 'current' ? 'active-tab' : ''}`}>currently reading</li>
-        <li onClick={()=>handleSetDisplayedList('finished')} className={`${ displayedList === 'finished' ? 'active-tab' : ''}`}>finished</li>
-        <li onClick={()=>handleSetDisplayedList('tbr')} className={`${ displayedList === 'tbr' ? 'active-tab' : ''}`}>want to read</li>
-        <button onClick={handleFormReveal}>add new entry</button>
+        <li onClick={()=>handleSetDisplay('current')} className={`${ display === 'current' ? 'active-tab' : ''}`}>currently reading</li>
+        <li onClick={()=>handleSetDisplay('finished')} className={`${ display === 'finished' ? 'active-tab' : ''}`}>finished</li>
+        <li onClick={()=>handleSetDisplay('tbr')} className={`${ display === 'tbr' ? 'active-tab' : ''}`}>want to read</li>
+        <button onClick={()=>handleSetDisplay('add')}>add new entry</button>
     </ul>
     );
 }
