@@ -73,3 +73,13 @@ button {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+.new-entry-form {
+    background-color: lavenderblush;
+    border: 1px solid lightslategray;
+    padding: 1rem;
+}
+
+.new-entry-form form > * {
+    
+}
