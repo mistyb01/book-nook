@@ -1,8 +1,8 @@
 // form fields depend on the list that's being added to
 // pages read: current, finished (but greyed out)
 // rating: current, finished
-import { Book } from "../types";
-import { useState, useEffect } from "react";
+import { Book, BookEntry } from "../types";
+import { useState, useEffect, FormEventHandler, FormEvent } from "react";
 
 interface NewEntryProps {
     book: Book;
@@ -10,10 +10,10 @@ interface NewEntryProps {
 
 const NewEntryForm: React.FC<NewEntryProps> = ({book}) => {
 
-    const [listToAdd, setListToAdd] = useState("current");
+    const [listToAdd, setListToAdd] = useState<"current" | "finished" | "tbr">("current");
     const [pageCount, setPageCount] = useState(book.pageCount);
     const [pagesRead, setPagesRead] = useState(0);
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5 | 0>(0);
 
     useEffect(() => {
         if (listToAdd === 'finished') {
@@ -21,13 +21,24 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book}) => {
         } else setPagesRead(0)
     }, [listToAdd])
 
+    function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const newBook : BookEntry = {
+            ...book,
+            status: listToAdd, // this is called a 'literal type'!
+            pagesRead: pagesRead,
+            userRating: rating
+        }
+        console.log("new:",newBook);
+    }
+
     return (
         <section className="new-entry-form">
             <h2>New Entry</h2>
             <h3>{book.title}</h3>
             {book.authors ? <p>Author: {book.authors.toString()}</p> :
             book.publisher ? <p>Publisher: {book.publisher}</p> : <p>Unknown author</p>}
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="spacer-x">
                     <label htmlFor="list">Add to</label>
                     <select name="list" id="list" onChange={(e)=>setListToAdd(e.target.value)}>

@@ -1,15 +1,16 @@
 type EntryProps = {
   title: string,
   author: string,
-  image: string,
   pageCount: number,
   pagesRead: number
+  // image: string,
+  // date start
 }
 
-const CurrentlyReadingEntry = ({title, author, image, pageCount, pagesRead}: EntryProps) => {
+const CurrentlyReadingEntry = ({title, author, pageCount, pagesRead}: EntryProps) => {
   return (
     <section className="tracker-entry">
-      <img src={image} className="tracker-entry-img"/>
+      {/* <img src={image} className="tracker-entry-img"/> */}
       <div className="tracker-entry-text">
         <h3>{title}</h3>
         <p>{author}</p>
