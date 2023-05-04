@@ -12,20 +12,11 @@ export type BookEntryData = {
     status: string, //"current" | "finished" | "tbr", // this is called a 'literal type'!
     pagesRead: number,
     userRating: number, 
+    dateAdded: string, // or should they have the type Date?
+    dateStarted: string | undefined,
+    dateFinished: string | undefined
 }
 
  // BookEntry is an intersection-- 
  // it must have ALL of the keys in both Book and BookEntryData 
 export type BookEntry = Book & BookEntryData;
-
-// let testEntry : BookEntry = {
-//     id: 'string',
-//     title: 'string',
-//     authors: [''],
-//     publisher: 'string',
-//     pageCount: 2,
-//     publishedDate: 'string',
-//     status: "current",
-//     pagesRead: 1,
-//     userRating: 1
-// }
