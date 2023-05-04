@@ -1,30 +1,23 @@
-import TheStrangerCover from '../assets/TheStranger.png';
-import TravelCatCover from '../assets/TravelCat.png';
+import { BookEntry } from "../types";
+import EntryFinished from "./EntryFinished";
 
-// note: data taken in by CurrentlyReadingEntry should be type BookEntry
-const MOCKDATA = [
-    {
-        id: "1",
-        title: 'The Stranger',
-        authors: 'Albert Camus',
-        image: TheStrangerCover,
-        pageCount: 122,
-        pagesRead: 50
-    },
-    {
-        id: "2",
-        title: 'The Traveling Cat Chronicles',
-        authors: 'Hiro Arikawa',
-        image: TravelCatCover,
-        pageCount: 275,
-        pagesRead: 200
-    },
-]
+interface Props {
+    userBooks: BookEntry[] | undefined;
+}
 
-const FinishedList = () => {
+const FinishedList : React.FC<Props> = ({userBooks}) => {
+    if (!userBooks) {
+        return <p>No books yet!</p>
+    }
+    const finishedBooks = userBooks.filter((book) => book.status === "finished");
+
+    if (finishedBooks.length === 0) { return <p>No books yet!</p>}
+
     return (
         <section className="currently-reading spacer-y">
-        finished
+        {finishedBooks.map((book) => 
+            <EntryFinished key={book.id} {...book}/>
+        )}
         </section>
     )
 }

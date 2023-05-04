@@ -1,6 +1,6 @@
 import { BookEntry } from "../types";
 
-const CurrentlyReadingEntry = ({title, authors, pageCount, pagesRead}: BookEntry) => {
+const EntryCurrent = ({title, authors, pageCount, pagesRead}: BookEntry) => {
   return (
     <section className="tracker-entry">
       {/* <img src={image} className="tracker-entry-img"/> */}
@@ -15,4 +15,4 @@ const CurrentlyReadingEntry = ({title, authors, pageCount, pagesRead}: BookEntry
   )
 }
 
-export default CurrentlyReadingEntry;
+export default EntryCurrent;

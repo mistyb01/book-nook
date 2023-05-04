@@ -32,8 +32,8 @@ function App() {
           display={display}
           handleSetDisplay={(state: string) => setDisplay(state)}/>
         {display === 'current' ? <CurrentlyReading userBooks={userBooks}/> :
-        display === 'finished' ? <FinishedList /> :
-        display === 'tbr' ? <ToReadList /> : 
+        display === 'finished' ? <FinishedList userBooks={userBooks}/> :
+        display === 'tbr' ? <ToReadList userBooks={userBooks}/> : 
         <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/> }
       </main>
 
