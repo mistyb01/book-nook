@@ -1,10 +1,10 @@
 import { useState, FormEvent } from 'react'; 
-import { Book } from '../types';
+import { Book, BookEntry } from '../types';
 import SearchResult from './SearchResult';
 import NewEntryForm from './NewEntryForm';
 import axios from 'axios';
 
-const AddEntry = () => {
+const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => {
     const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
 
     const [bookResults, setBookResults] = useState<Book[] | undefined>();
@@ -53,7 +53,8 @@ const AddEntry = () => {
 
     return (
         <>
-        {selectedBook && <NewEntryForm book={selectedBook}/>}
+        {selectedBook && <NewEntryForm book={selectedBook} 
+        sendBookData={(newBook:BookEntry)=>handleUserBookUpdate(newBook)}/>}
 
         <section className="add-entry-form">
           <form onSubmit={handleForm} className='spacer-x'>

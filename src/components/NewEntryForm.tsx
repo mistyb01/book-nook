@@ -6,14 +6,15 @@ import { useState, useEffect, FormEventHandler, FormEvent } from "react";
 
 interface NewEntryProps {
     book: Book;
+    sendBookData: Function
 } 
 
-const NewEntryForm: React.FC<NewEntryProps> = ({book}) => {
+const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
 
-    const [listToAdd, setListToAdd] = useState<"current" | "finished" | "tbr">("current");
+    const [listToAdd, setListToAdd] = useState("current");
     const [pageCount, setPageCount] = useState(book.pageCount);
     const [pagesRead, setPagesRead] = useState(0);
-    const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5 | 0>(0);
+    const [rating, setRating] = useState(0);
 
     useEffect(() => {
         if (listToAdd === 'finished') {
@@ -25,11 +26,12 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book}) => {
         e.preventDefault();
         const newBook : BookEntry = {
             ...book,
-            status: listToAdd, // this is called a 'literal type'!
+            status: listToAdd, 
             pagesRead: pagesRead,
             userRating: rating
         }
         console.log("new:",newBook);
+        sendBookData(newBook);
     }
 
     return (
