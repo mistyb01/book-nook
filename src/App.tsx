@@ -31,9 +31,9 @@ function App() {
         <TrackerHeader 
           display={display}
           handleSetDisplay={(state: string) => setDisplay(state)}/>
-        {display === 'current' ? <CurrentlyReading/> :
-        display === 'finished' ? <FinishedList/> :
-        display === 'tbr' ? <ToReadList/> : 
+        {display === 'current' ? <CurrentlyReading userBooks={userBooks}/> :
+        display === 'finished' ? <FinishedList /> :
+        display === 'tbr' ? <ToReadList /> : 
         <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/> }
       </main>
 
