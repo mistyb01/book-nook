@@ -11,7 +11,7 @@ export type Book = {
 export type BookEntryData = {
     status: "current" | "finished" | "tbr", // this is called a 'literal type'!
     pagesRead: number,
-    userRating: 1 | 2 | 3 | 4 | 5, // literal type
+    userRating: 1 | 2 | 3 | 4 | 5 | undefined, // literal type
 }
 
  // BookEntry is an intersection-- 

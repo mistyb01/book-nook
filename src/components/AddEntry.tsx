@@ -53,6 +53,8 @@ const AddEntry = () => {
 
     return (
         <>
+        {selectedBook && <NewEntryForm book={selectedBook}/>}
+
         <section className="add-entry-form">
           <form onSubmit={handleForm} className='spacer-x'>
             <label htmlFor='searchInput'>search for a book by title or authors</label>
@@ -60,9 +62,7 @@ const AddEntry = () => {
             <button type="submit">go</button>
           </form>
         </section>
-
-        {selectedBook && <NewEntryForm book={selectedBook}/>}
-
+        
         <section className="search-results spacer-y">
             {loading && <p>loading...</p>}
             {error && <p>Error: {error.message}</p>}
