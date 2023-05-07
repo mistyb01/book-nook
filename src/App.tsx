@@ -28,9 +28,7 @@ function App() {
         <h1>book nook</h1>
       </header>
       <main className='spacer-y'>
-        <TrackerHeader 
-          display={display}
-          handleSetDisplay={(state: string) => setDisplay(state)}/>
+        <TrackerHeader/>
         {display === 'current' ? <CurrentlyReading userBooks={userBooks}/> :
         display === 'finished' ? <FinishedList userBooks={userBooks}/> :
         display === 'tbr' ? <ToReadList userBooks={userBooks}/> : 
