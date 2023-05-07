@@ -9,6 +9,7 @@ import TrackerHeader from './components/TrackerHeader';
 import AddEntry from './components/AddEntry';
 import { useLocalStorage } from 'usehooks-ts';
 import { BookEntry } from './types'; 
+import TabPanel from './components/material-ui/TabPanel';
 
 function App() {
   const [display, setDisplay] = useState('current');
@@ -22,17 +23,33 @@ function App() {
     }
   }
 
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <>
       <header>
         <h1>book nook</h1>
       </header>
       <main className='spacer-y'>
-        <TrackerHeader/>
-        {display === 'current' ? <CurrentlyReading userBooks={userBooks}/> :
+        <TrackerHeader value={value} handleChange={handleChange}/>
+        <TabPanel value={value} index={0}>
+          <CurrentlyReading userBooks={userBooks}/> 
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <FinishedList userBooks={userBooks}/>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <ToReadList userBooks={userBooks}/>
+        </TabPanel>
+        {/* {display === 'current' ? <CurrentlyReading userBooks={userBooks}/> :
         display === 'finished' ? <FinishedList userBooks={userBooks}/> :
         display === 'tbr' ? <ToReadList userBooks={userBooks}/> : 
-        <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/> }
+        <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/> } */}
+
       </main>
 
     </>
