@@ -1,16 +1,13 @@
 import './App.css'
 import React, { useState, useEffect } from 'react'; 
 
-import CurrentlyReading from './components/CurrentlyReading';
-import FinishedList from './components/FinishedList';
-import ToReadList from './components/ToReadList';
-
 import TrackerHeader from './components/TrackerHeader';
 import AddEntry from './components/AddEntry';
 import { useLocalStorage } from 'usehooks-ts';
 import { BookEntry } from './types'; 
 import TabPanel from './components/material-ui/TabPanel';
 import FloatingActionButton from './components/material-ui/FloatingActionButton';
+import TrackerList from './components/TrackerList';
 
 function App() {
   const [userBooks, setUserBooks] = useLocalStorage<BookEntry[] | undefined>('userBookData', undefined)
@@ -35,15 +32,15 @@ function App() {
       <main>
         <TrackerHeader value={value} handleChange={handleChange}/>
         <TabPanel value={value} index={0}>
-          <CurrentlyReading userBooks={userBooks}/> 
+          <TrackerList listType="current" userBooks={userBooks}/> 
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          <FinishedList userBooks={userBooks}/>
+          <TrackerList listType="finished" userBooks={userBooks}/>
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <ToReadList userBooks={userBooks}/>
+          <TrackerList listType="tbr" userBooks={userBooks}/>
         </TabPanel> 
 
         <TabPanel value={value} index={3}>
