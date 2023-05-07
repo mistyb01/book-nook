@@ -1,6 +1,7 @@
 import { BookEntry } from '../types';
 import EntryCurrent from './EntryCurrent';
 import Stack from '@mui/joy/Stack';
+import EntryCard from './material-ui/EntryCard';
 
 interface Props {
     userBooks: BookEntry[] | undefined;
@@ -15,9 +16,11 @@ const CurrentlyReading : React.FC<Props>= ({userBooks}) => {
     if (currentBooks.length === 0) { return <p>No books yet!</p>}
 
     return (
-        <Stack spacing={5}>
+        <Stack spacing={3}>
             {currentBooks.map((book) =>
-            <EntryCurrent key={book.id} {...book}/>)}
+            <EntryCard>
+                <EntryCurrent key={book.id} {...book}/>
+            </EntryCard>)}
         </Stack>
     )
 }

@@ -1,5 +1,7 @@
 import { BookEntry } from "../types";
 import EntryFinished from "./EntryFinished";
+import Stack from '@mui/joy/Stack';
+import EntryCard from "./material-ui/EntryCard";
 
 interface Props {
     userBooks: BookEntry[] | undefined;
@@ -14,11 +16,13 @@ const FinishedList : React.FC<Props> = ({userBooks}) => {
     if (finishedBooks.length === 0) { return <p>No books yet!</p>}
 
     return (
-        <section className="currently-reading spacer-y">
+        <Stack spacing={3}>
         {finishedBooks.map((book) => 
-            <EntryFinished key={book.id} {...book}/>
+            <EntryCard>
+                <EntryFinished key={book.id} {...book}/>
+            </EntryCard>
         )}
-        </section>
+        </Stack>
     )
 }
 

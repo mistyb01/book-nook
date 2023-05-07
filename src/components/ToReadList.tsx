@@ -1,5 +1,7 @@
 import { BookEntry } from "../types";
 import EntryTBR from "./EntryTBR";
+import EntryCard from "./material-ui/EntryCard";
+import Stack from '@mui/joy/Stack';
 
 interface Props {
     userBooks: BookEntry[] | undefined;
@@ -14,11 +16,13 @@ const ToReadList : React.FC<Props> = ({userBooks}) => {
     if (tbrBooks.length === 0) { return <p>No books yet!</p>}
 
     return (
-        <section className="currently-reading spacer-y">
+        <Stack spacing={3}>
         {tbrBooks.map((book) => 
-            <EntryTBR key={book.id} {...book}/>
+            <EntryCard>
+                <EntryTBR key={book.id} {...book}/>
+            </EntryCard>
         )}
-        </section>
+        </Stack>
     )
 }
 

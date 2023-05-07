@@ -22,44 +22,35 @@ function App() {
       setUserBooks([...userBooks, newBook]);
     }
   }
-
   const [value, setValue] = useState(0);
-  const [displayForm, setDisplayForm] = useState(false);
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-    
+    setValue(newValue);    
   };
-
-  const handleDisplay = () => {
-    setValue(3);
-  }
 
   return (
     <>
       <header>
         <h1>book nook</h1>
       </header>
-      <main className='spacer-y'>
+      <main>
         <TrackerHeader value={value} handleChange={handleChange}/>
-          <TabPanel value={value} index={0}>
-            <CurrentlyReading userBooks={userBooks}/> 
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <FinishedList userBooks={userBooks}/>
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <ToReadList userBooks={userBooks}/>
-          </TabPanel> 
-          <TabPanel value={value} index={3}>
-          <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/>
-          </TabPanel> 
-        <FloatingActionButton handleDisplay={handleDisplay}/>
-        {/* {display === 'current' ? <CurrentlyReading userBooks={userBooks}/> :
-        display === 'finished' ? <FinishedList userBooks={userBooks}/> :
-        display === 'tbr' ? <ToReadList userBooks={userBooks}/> : 
-        <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/> } */}
+        <TabPanel value={value} index={0}>
+          <CurrentlyReading userBooks={userBooks}/> 
+        </TabPanel>
 
+        <TabPanel value={value} index={1}>
+          <FinishedList userBooks={userBooks}/>
+        </TabPanel>
+
+        <TabPanel value={value} index={2}>
+          <ToReadList userBooks={userBooks}/>
+        </TabPanel> 
+
+        <TabPanel value={value} index={3}>
+          <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/>
+        </TabPanel> 
+        
+        <FloatingActionButton handleDisplay={() => setValue(3)}/>
       </main>
 
     </>
