@@ -1,12 +1,13 @@
 import './App.css'
-import React, { useState, useEffect } from 'react'; 
+import React, { useState } from 'react'; 
 
 import TrackerHeader from './components/TrackerHeader';
 import AddEntry from './components/AddEntry';
 import { useLocalStorage } from 'usehooks-ts';
 import { BookEntry } from './types'; 
 
-import { ThemeProvider } from '@mui/material';
+import { ThemeProvider, Typography } from '@mui/material';
+import { CssBaseline } from '@mui/material/';
 import theme from './components/material-ui/theme';
 import TabPanel from './components/material-ui/TabPanel';
 import TrackerList from './components/TrackerList';
@@ -29,8 +30,9 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline>
       <header>
-        <h1>book nook</h1>
+        <Typography variant="logo">book nook</Typography>
       </header>
       <main>
         <TrackerHeader value={value} handleChange={handleChange}/>
@@ -52,7 +54,7 @@ function App() {
         
         <FloatingActionButton handleDisplay={() => setValue(3)}/>
       </main>
-
+      </CssBaseline>
     </ThemeProvider>
   )
 }

@@ -1,14 +1,13 @@
+import Typography from "@mui/material/Typography";
 import { BookEntry } from "../types";
 
 const EntryTBR = ({title, authors, dateAdded} : BookEntry) => {
   return (
-    <section className="tracker-entry">
-    <div className="tracker-entry-text">
-      <h3>{title}</h3>
+    <>
+      <Typography variant="entryHeader">{title}</Typography>
       <p>{authors.toString()}</p>
       <p>Date added: {dateAdded}</p>
-    </div>
-  </section>
+  </>
   )
 }
 
