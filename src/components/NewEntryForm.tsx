@@ -2,14 +2,15 @@
 // pages read: current, finished (but greyed out)
 // rating: current, finished
 import { Book, BookEntry } from "../types";
-import { useState, useEffect, FormEventHandler, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 import { Button, Stack, TextField } from "@mui/material";
 
 interface NewEntryProps {
@@ -50,16 +51,17 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
             dateStarted: dateStart,
             dateFinished: dateFinished,
         }
-        console.log("new:",newBook);
         sendBookData(newBook);
     }
 
     return (
         <Box>
+            <Paper elevation={1} sx={{ padding: "1.5rem" }}>
+
             <Box sx={{marginBottom: "1rem"}}>
                 <Typography variant="overline">New Entry</Typography>
                 <Typography variant="h4">{book.title}</Typography>
-                <Typography variant="emphasis">{book.authors ? <p>{book.authors.toString()}</p> :
+                <Typography variant="emphasis">{book.authors ? <p>{book.authors.join(', ')}</p> :
                 book.publisher ? <p>Published by {book.publisher}</p> : <p>Unknown author</p>}
                 </Typography>
             </Box>
@@ -131,6 +133,7 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
                 <Button type="submit" sx={{width: "min-content"}}>submit</Button>
                 </Stack>
             </form>
+            </Paper>
         </Box>
     )
 }

@@ -1,4 +1,3 @@
-import { ThemeContext } from "@emotion/react";
 import { createTheme } from "@mui/material/styles";
 
 
@@ -28,6 +27,12 @@ const theme = createTheme({
         },
       },
     typography: {
+        body1: {
+            fontFamily: ['Varela Round', 'sans-serif'].join(','),
+        },
+        h4: {
+            fontFamily: ['Varela Round', 'sans-serif'].join(','),
+        },
         emphasis: {
             color: 'hotpink',
             fontWeight: '600'
@@ -39,7 +44,8 @@ const theme = createTheme({
         },
         entryHeader: {
             fontFamily: ['Varela Round', 'sans-serif'].join(','),
-            fontSize: '1.5rem'
+            fontSize: '1.5rem',
+            fontWeight: '800'
         }
         
     },
@@ -54,7 +60,15 @@ const theme = createTheme({
       MuiCard: {
         styleOverrides: {
             root: {
-                backgroundColor: "rgba(255,255,255,0.5)" 
+                backgroundColor: "rgba(255,255,255,0.5)",
+                padding: "0.75rem 1rem"
+            }
+        }
+      },
+      MuiPaper: {
+        styleOverrides: {
+            root: {
+                // padding: "1rem"
             }
         }
       }
@@ -81,7 +95,7 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Typography' {
     interface TypographyPropsVariantOverrides {
         emphasis: true;
-        header: true;
+        logo: true;
         entryHeader: true;
     }
 }

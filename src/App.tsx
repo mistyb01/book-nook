@@ -7,7 +7,9 @@ import { useLocalStorage } from 'usehooks-ts';
 import { BookEntry } from './types'; 
 
 import { ThemeProvider, Typography } from '@mui/material';
-import { CssBaseline } from '@mui/material/';
+// import Paper from '@mui/material/Paper';
+
+import CssBaseline from '@mui/material/CssBaseline';
 import theme from './components/material-ui/theme';
 import TabPanel from './components/material-ui/TabPanel';
 import TrackerList from './components/TrackerList';

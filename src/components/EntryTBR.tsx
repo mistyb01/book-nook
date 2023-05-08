@@ -5,7 +5,7 @@ const EntryTBR = ({title, authors, dateAdded} : BookEntry) => {
   return (
     <>
       <Typography variant="entryHeader">{title}</Typography>
-      <p>{authors.toString()}</p>
+      <p>{authors.join(', ')}</p>
       <p>Date added: {dateAdded}</p>
   </>
   )

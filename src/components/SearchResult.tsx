@@ -9,9 +9,9 @@ const SearchResult = ({id, title, authors, publisher, publishedDate, pageCount, 
     return (
         <Card variant="outlined" key={id}  sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <CardContent>
-                <Typography variant="h5">{title}</Typography>
+                <Typography variant="entryHeader">{title}</Typography>
                 <Typography variant="body1">
-                    {authors && <p><Typography variant="emphasis">authors</Typography> {authors[0]}</p>}
+                    {authors && <p><Typography variant="emphasis">authors</Typography> {authors.join(', ')}</p>}
                     {publisher && <p><Typography variant="emphasis">publisher</Typography> {publisher}</p>}
                     {publishedDate && <p><Typography variant="emphasis">year</Typography> {publishedDate.substring(0,4)}</p>}
                 </Typography>
