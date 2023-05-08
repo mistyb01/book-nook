@@ -30,6 +30,10 @@ const theme = createTheme({
         body1: {
             fontFamily: ['Varela Round', 'sans-serif'].join(','),
         },
+        body2: {
+            fontFamily: ['Varela Round', 'sans-serif'].join(','),
+            opacity: "0.75"
+        },
         h4: {
             fontFamily: ['Varela Round', 'sans-serif'].join(','),
         },
@@ -40,11 +44,13 @@ const theme = createTheme({
         logo: {
             fontFamily: ['Darumadrop One', 'cursive'].join(','),
             fontSize: '3rem',
-            color: '#cb4e6c'
+            color: '#cb4e6c',
+            textDecoration: 'underline dotted 5px rgba(203, 78, 107, 0.3)',
+            // textUnderlineOffset: '0.1em'
         },
         entryHeader: {
             fontFamily: ['Varela Round', 'sans-serif'].join(','),
-            fontSize: '1.5rem',
+            fontSize: '1.75rem',
             fontWeight: '800'
         }
         
@@ -65,13 +71,7 @@ const theme = createTheme({
             }
         }
       },
-      MuiPaper: {
-        styleOverrides: {
-            root: {
-                // padding: "1rem"
-            }
-        }
-      }
+
     },
   });
 
