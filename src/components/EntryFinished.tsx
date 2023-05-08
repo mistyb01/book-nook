@@ -1,15 +1,19 @@
+import Typography from "@mui/material/Typography";
 import { BookEntry } from "../types";
+import Box from "@mui/material/Box";
+import Divider from '@mui/material/Divider';
 
 const EntryFinished = ({title, authors, userRating, dateFinished} : BookEntry) => {
   return (
-    <section className="tracker-entry">
-    <div className="tracker-entry-text">
-      <h3>{title}</h3>
-      <p>{authors.toString()}</p>
+    <>
+      <Box>
+          <Typography variant="entryHeader">{title}</Typography>
+          <Typography>{authors.join(', ')}</Typography>
+      </Box>
+      <Divider variant="middle" />
       {dateFinished && <p>Finished reading {dateFinished}</p>}
-      {userRating > 0 && <p>Rating: {userRating}</p>}
-    </div>
-  </section>
+      {userRating ? <p>Rating: {userRating}</p> : ''}
+    </>
   )
 }
 

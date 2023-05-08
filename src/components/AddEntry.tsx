@@ -3,6 +3,8 @@ import { Book, BookEntry } from '../types';
 import SearchResult from './SearchResult';
 import NewEntryForm from './NewEntryForm';
 import axios from 'axios';
+import { Stack, Button, TextField, Box } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => {
     const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
@@ -52,20 +54,30 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
     
 
     return (
-        <>
+        <Stack spacing={2}>
         {selectedBook && <NewEntryForm book={selectedBook} 
         sendBookData={(newBook:BookEntry)=>handleUserBookUpdate(newBook)}/>}
 
-        <section className="add-entry-form">
-          <form onSubmit={handleForm} className='spacer-x'>
-            <label htmlFor='searchInput'>search for a book by title or authors</label>
-            <input type="text" name="searchInput" value={query} onChange={(e) => setQuery(e.target.value)}></input>
-            <button type="submit">go</button>
+          <form onSubmit={handleForm}>
+            <Stack direction="row" spacing={1}>
+              <TextField fullWidth
+                id="searchInput"
+                label="Find a book by title, author, ISBN"
+                variant="filled"
+                value={query}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setQuery(event.target.value);
+                }}/>
+              <Button variant="outlined" type="submit">Search</Button>
+              </Stack>
           </form>
-        </section>
         
-        <section className="search-results spacer-y">
-            {loading && <p>loading...</p>}
+        <Stack spacing={2}>
+            {loading &&  
+            <Box sx={{display: "flex", justifyContent: "center", margin: "2rem"}}>
+              <CircularProgress />
+            </Box>
+            }
             {error && <p>Error: {error.message}</p>}
             {bookResults && bookResults.map((item) => (
             <SearchResult 
@@ -78,8 +90,8 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
                 pageCount={item.pageCount}
                 handleSetSelectedBook={(book: Book) => setSelectedBook(book)}
             />))}
-          </section>
-        </>
+          </Stack>
+        </Stack>
     )
 }
 

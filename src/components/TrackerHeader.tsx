@@ -1,15 +1,33 @@
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { SyntheticEvent } from 'react';
+import Box from '@mui/material/Box';
+
 type Props = {
-    display: string,
-    handleSetDisplay: Function
+    value: number,
+    handleChange: (event: SyntheticEvent<Element, Event>, value: any) => void
 }
-const TrackerHeader = ({display, handleSetDisplay}: Props) => {
+const TrackerHeader = ({value, handleChange}: Props) => {
+    // reference: https://mui.com/material-ui/react-tabs/#basic-tabs
+
+    function a11yProps(index: number) {
+        return {
+          id: `simple-tab-${index}`,
+          'aria-controls': `simple-tabpanel-${index}`,
+        };
+      }      
+  
     return (
-        <ul className="tracker-tabs">
-        <li onClick={()=>handleSetDisplay('current')} className={`${ display === 'current' ? 'active-tab' : ''}`}>currently reading</li>
-        <li onClick={()=>handleSetDisplay('finished')} className={`${ display === 'finished' ? 'active-tab' : ''}`}>finished</li>
-        <li onClick={()=>handleSetDisplay('tbr')} className={`${ display === 'tbr' ? 'active-tab' : ''}`}>want to read</li>
-        <button onClick={()=>handleSetDisplay('add')}>add new entry</button>
-    </ul>
+        <Box sx={{ width: '100%' }}>
+            <Tabs value={value} onChange={handleChange} centered
+            TabIndicatorProps={{
+                style: {transition: 'none'}
+            }}>
+                <Tab label="Currently reading" {...a11yProps(0)}/>
+                <Tab label="Finished" {...a11yProps(1)}/>
+                <Tab label="To be read" {...a11yProps(2)}/>
+            </Tabs>
+        </Box>
     );
 }
 
