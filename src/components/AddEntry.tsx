@@ -3,7 +3,8 @@ import { Book, BookEntry } from '../types';
 import SearchResult from './SearchResult';
 import NewEntryForm from './NewEntryForm';
 import axios from 'axios';
-import { Stack, Button, TextField } from '@mui/material';
+import { Stack, Button, TextField, Box } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => {
     const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
@@ -72,7 +73,11 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
           </form>
         
         <Stack spacing={2}>
-            {loading && <p>loading...</p>}
+            {loading &&  
+            <Box sx={{display: "flex", justifyContent: "center", margin: "2rem"}}>
+              <CircularProgress />
+            </Box>
+            }
             {error && <p>Error: {error.message}</p>}
             {bookResults && bookResults.map((item) => (
             <SearchResult 
