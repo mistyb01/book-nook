@@ -1,7 +1,7 @@
-import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { MouseEventHandler } from 'react';
+import Box from '@mui/material/Box';
 
 const FloatingActionButton = ({handleDisplay}:{handleDisplay: any}) => {
     return (
