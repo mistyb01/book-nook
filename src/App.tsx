@@ -5,9 +5,12 @@ import TrackerHeader from './components/TrackerHeader';
 import AddEntry from './components/AddEntry';
 import { useLocalStorage } from 'usehooks-ts';
 import { BookEntry } from './types'; 
+
+import { ThemeProvider } from '@mui/material';
+import theme from './components/material-ui/theme';
 import TabPanel from './components/material-ui/TabPanel';
-import FloatingActionButton from './components/material-ui/FloatingActionButton';
 import TrackerList from './components/TrackerList';
+import FloatingActionButton from './components/material-ui/FloatingActionButton';
 
 function App() {
   const [userBooks, setUserBooks] = useLocalStorage<BookEntry[] | undefined>('userBookData', undefined)
@@ -25,7 +28,7 @@ function App() {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <header>
         <h1>book nook</h1>
       </header>
@@ -50,7 +53,7 @@ function App() {
         <FloatingActionButton handleDisplay={() => setValue(3)}/>
       </main>
 
-    </>
+    </ThemeProvider>
   )
 }
 

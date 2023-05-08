@@ -1,5 +1,5 @@
 import { Book } from "../types"
-import { Card, Button, CardContent, CardHeader, Typography, CardActions } from '@mui/material';
+import { Card, Button, CardContent, Typography, CardActions } from '@mui/material';
  
 
 type Props = Book & {handleSetSelectedBook: Function}
@@ -11,9 +11,9 @@ const SearchResult = ({id, title, authors, publisher, publishedDate, pageCount, 
             <CardContent>
                 <Typography variant="h5">{title}</Typography>
                 <Typography variant="body1">
-                {authors && <p>authors: {authors[0]}</p>}
-                {publisher && <p>publisher: {publisher}</p>}
-                {publishedDate && <p>year: {publishedDate.substring(0,4)}</p>}
+                    {authors && <p><Typography variant="emphasis">authors</Typography> {authors[0]}</p>}
+                    {publisher && <p><Typography variant="emphasis">publisher</Typography> {publisher}</p>}
+                    {publishedDate && <p><Typography variant="emphasis">year</Typography> {publishedDate.substring(0,4)}</p>}
                 </Typography>
             </CardContent>
             <CardActions>
