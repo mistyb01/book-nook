@@ -7,7 +7,7 @@ type Props = Book & {handleSetSelectedBook: Function}
 const SearchResult = ({id, title, authors, publisher, publishedDate, pageCount, handleSetSelectedBook }: Props) => {
     const book = {id,title,authors,publisher,publishedDate,pageCount} // can i shorten this 
     return (
-        <Card variant="outlined" key={id}>
+        <Card variant="outlined" key={id}  sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <CardContent>
                 <Typography variant="h5">{title}</Typography>
                 <Typography variant="body1">

@@ -3,9 +3,7 @@ import { Book, BookEntry } from '../types';
 import SearchResult from './SearchResult';
 import NewEntryForm from './NewEntryForm';
 import axios from 'axios';
-// import TextField from '@mui/material/TextField';
 import { Stack, Button, TextField } from '@mui/material';
-// import { Button } from '@mui/material';
 
 const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => {
     const API_KEY = 'AIzaSyAN3kV1q00b4WORgbV4TtdLSxDpt5czr9E';
@@ -73,7 +71,7 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
               </Stack>
           </form>
         
-        <section className="search-results spacer-y">
+        <Stack spacing={2}>
             {loading && <p>loading...</p>}
             {error && <p>Error: {error.message}</p>}
             {bookResults && bookResults.map((item) => (
@@ -87,7 +85,7 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
                 pageCount={item.pageCount}
                 handleSetSelectedBook={(book: Book) => setSelectedBook(book)}
             />))}
-          </section>
+          </Stack>
         </Stack>
     )
 }

@@ -11,7 +11,7 @@ export type Book = {
 export type BookEntryData = {
     status: string, //"current" | "finished" | "tbr", // this is called a 'literal type'!
     pagesRead: number,
-    userRating: number, 
+    userRating: number | null, 
     dateAdded: string, // or should they have the type Date?
     dateStarted: string | undefined,
     dateFinished: string | undefined

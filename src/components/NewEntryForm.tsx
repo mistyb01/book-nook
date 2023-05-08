@@ -3,6 +3,14 @@
 // rating: current, finished
 import { Book, BookEntry } from "../types";
 import { useState, useEffect, FormEventHandler, FormEvent } from "react";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
+import { Button, Stack, TextField } from "@mui/material";
 
 interface NewEntryProps {
     book: Book;
@@ -19,7 +27,7 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
     const [listToAdd, setListToAdd] = useState("current");
     const [pageCount, setPageCount] = useState(book.pageCount);
     const [pagesRead, setPagesRead] = useState(0);
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState<number | null>(0);
     const [dateStart, setDateStart] = useState<string | undefined>(undefined);
     const [dateFinished, setDateFinished] = useState<string | undefined>(undefined);
 
@@ -47,57 +55,83 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
     }
 
     return (
-        <section className="new-entry-form">
-            <h2>New Entry</h2>
-            <h3>{book.title}</h3>
-            {book.authors ? <p>Author: {book.authors.toString()}</p> :
-            book.publisher ? <p>Publisher: {book.publisher}</p> : <p>Unknown author</p>}
+        <Box>
+            <Box sx={{marginBottom: "1rem"}}>
+                <Typography variant="overline">New Entry</Typography>
+                <Typography variant="h4">{book.title}</Typography>
+                <Typography variant="emphasis">{book.authors ? <p>{book.authors.toString()}</p> :
+                book.publisher ? <p>Published by {book.publisher}</p> : <p>Unknown author</p>}
+                </Typography>
+            </Box>
             <form onSubmit={handleSubmit}>
-                <div className="spacer-x">
-                    <label htmlFor="list">Add to</label>
-                    <select name="list" id="list" onChange={(e)=>setListToAdd(e.target.value)}>
-                    <option value="current">Currently reading</option>
-                    <option value="finished">Finished</option>
-                    <option value="tbr">To be read</option>
-                    </select> 
-                </div>
-                <div className="spacer-x">
-                    <label htmlFor="pageCount">page count</label>
-                    <input type="number" name="pageCount" value={pageCount} 
-                    onChange={(e) => setPageCount(parseInt(e.target.value))}></input>
-                </div>
-                { ['current', 'finished'].includes(listToAdd) &&
-                <>
-                <div className="spacer-x">
-                    <label htmlFor="pagesRead">pages read</label>
-                    <input type="number" name="pagesRead" value={pagesRead}
-                    onChange={(e) => setPagesRead(parseInt(e.target.value))}></input>
-                </div>
-                <div className="spacer-x">
-                    <label htmlFor="rating">your rating</label>
-                    <input type="number" name="rating" min="0" max="5" value={rating}
-                    onChange={(e) => setRating(parseInt(e.target.value))}></input>
-                </div>
-                <div className="spacer-x">
-                    <label htmlFor="date-start">date started</label>
-                    <input type="date" id="start" name="date-start"
-                    value={dateStart || formattedDate}
-                    onChange={(e) => setDateStart(e.target.value)}></input>
-                </div>
-                </>
-                }
-                {listToAdd === 'finished' && 
-                <div className="spacer-x">
-                    <label htmlFor="date-fin">date finished</label>
-                    <input type="date" id="start" name="date-fin"
-                    value={dateFinished}
-                    onChange={(e) => setDateFinished(e.target.value)}></input>
-                </div>
-                }
+                <Stack spacing={2}>
+                <FormControl sx={{width:"75%"}}>
+                    <InputLabel>List to add</InputLabel>
+                    <Select
+                        labelId="select-list-label"
+                        id="select-list"
+                        value={listToAdd}
+                        label="Select List"
+                        onChange={(e:any)=>setListToAdd(e.target.value)}>
+                        <MenuItem value="current">Currently reading</MenuItem>
+                        <MenuItem value="finished">Finished</MenuItem>
+                        <MenuItem value="tbr">To be read</MenuItem>
+                    </Select>
+                </FormControl>
 
-                <button type="submit">submit</button>
+                <Stack direction="row" spacing={1}>
+                <TextField
+                    label="Page Count"
+                    variant="outlined"
+                    type="number"
+                    value={pageCount} 
+                    onChange={(e) => setPageCount(parseInt(e.target.value))}
+                />
+                
+                { ['current', 'finished'].includes(listToAdd) &&
+                <TextField
+                    label="Pages Read"
+                    variant="outlined"
+                    type="number"
+                    value={pagesRead} 
+                    onChange={(e) => setPagesRead(parseInt(e.target.value))}/>
+                }
+                </Stack>
+
+                <Stack direction="row" spacing={1}>
+                { ['current', 'finished'].includes(listToAdd) &&
+                <TextField
+                    label="Date started"
+                    variant="outlined"
+                    type="date"
+                    value={dateFinished} 
+                    onChange={(e) => setDateStart(e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                    />}
+                {listToAdd === 'finished' && 
+                    <TextField
+                    label="Date finished"
+                    variant="outlined"
+                    type="date"
+                    value={dateFinished} 
+                    onChange={(e) => setDateFinished(e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                    />}
+                </Stack>
+                {listToAdd === 'finished' && 
+                    <>
+                    <Typography component="legend">Your rating</Typography>
+                    <Rating
+                    name="simple-controlled"
+                    value={rating}
+                    onChange={(e, newValue) => setRating(newValue)}
+                    />
+                    </>
+                }
+                <Button type="submit" sx={{width: "min-content"}}>submit</Button>
+                </Stack>
             </form>
-        </section>
+        </Box>
     )
 }
 
