@@ -46,7 +46,6 @@ const theme = createTheme({
             fontSize: '3rem',
             color: '#cb4e6c',
             textDecoration: 'underline dotted 5px rgba(203, 78, 107, 0.3)',
-            // textUnderlineOffset: '0.1em'
         },
         entryHeader: {
             fontFamily: ['Varela Round', 'sans-serif'].join(','),
