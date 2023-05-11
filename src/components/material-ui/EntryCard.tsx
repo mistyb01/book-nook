@@ -12,7 +12,6 @@ const EntryCard = (props: EntryCardProps) => {
     const { children } = props;
 
     return (
-        <>
         <Card variant="outlined">
             <CardContent>
                 <Stack spacing={2}>
@@ -20,7 +19,6 @@ const EntryCard = (props: EntryCardProps) => {
                 </Stack>
             </CardContent>
         </Card>
-        </>
     );
 }
 

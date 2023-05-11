@@ -11,8 +11,8 @@ const EntryFinished = ({title, authors, userRating, dateFinished} : BookEntry) =
           <Typography>{authors.join(', ')}</Typography>
       </Box>
       <Divider variant="middle" />
-      {dateFinished && <p>Finished reading {dateFinished}</p>}
-      {userRating ? <p>Rating: {userRating}</p> : ''}
+      {dateFinished && <Typography>Finished reading {dateFinished}</Typography>}
+      {userRating ? <Typography>Rating: {userRating}</Typography> : ''}
     </>
   )
 }

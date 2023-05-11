@@ -36,7 +36,7 @@ const TrackerList : React.FC<Props> = ({userBooks, listType}) => {
     return (
         <Stack spacing={3}>
         {filteredBooks.map((book) => 
-            <EntryCard>
+            <EntryCard key={book.id}>
                 {listType === "current" ? 
                 <EntryCurrent key={book.id} {...book}/> :
                 listType === "finished" ? 

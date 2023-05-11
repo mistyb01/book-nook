@@ -11,7 +11,7 @@ const EntryTBR = ({title, authors, dateAdded} : BookEntry) => {
           <Typography>{authors.join(', ')}</Typography>
       </Box>
       <Divider variant="middle" />
-      <p>Date added: {dateAdded}</p>
+      <Typography>Date added: {dateAdded}</Typography>
   </>
   )
 }

@@ -15,9 +15,9 @@ const EntryCurrent = ({title, authors, pageCount, pagesRead, dateStarted}: BookE
           <Typography>{authors.join(', ')}</Typography>
         </Box>
         <Divider variant="middle" />
-        {dateStarted && <p>Started reading {dateStarted}</p>}
+        {dateStarted && <Typography>Started reading {dateStarted}</Typography>}
         <Box sx={{ display: "flex", alignItems: "center"}}>
-        <Button size="small" variant="outlined" sx={{ width: "min-content"}}>update</Button>
+          <Button size="small" variant="outlined" sx={{ width: "min-content"}}>update</Button>
           <Box sx={{ width: '100%', ml: 1 }}>
             <Typography variant="body2">{pagesRead} / {pageCount} pages read</Typography>
             <LinearProgress variant="determinate" sx={{ borderRadius: "5px", height: "10px"}} value={progressBarVal} />
