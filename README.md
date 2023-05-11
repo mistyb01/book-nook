@@ -1,5 +1,6 @@
-# book nook 📚
-A minimal reading tracker built with React, Typescript, and Material UI!
+![image](https://user-images.githubusercontent.com/60805050/236995165-7b7f656a-de86-4ef5-9324-8b12b422b666.png)
+
+A reading tracker built with React, Typescript, and Material UI.
 
 ## MVP To-do:
 CRUD operations
@@ -11,6 +12,7 @@ CRUD operations
 - [ ] Delete an entry
 
 UI stuff
+- [ ] Mobile responsiveness
 - [ ] Display book covers
 - [ ] Show rating within entries as stars
 
@@ -22,5 +24,7 @@ UI stuff
   - Each progress update can be represented as an entry on a timeline, that is toggleable for each book.
 - A statistics page that gives details about stuff like pages read, most read genres, etc.
   - Could include calendar view denoting books and # of pages read? Similar to github contribution chart
+- Option for users to fill out book data manually (if not found in API)
+- Dark mode
 
 
