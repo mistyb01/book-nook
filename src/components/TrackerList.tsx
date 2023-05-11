@@ -14,7 +14,7 @@ interface Props {
 const EmptyListMessage = ({listType}:{listType:string}) => {
     if (listType === "tbr") listType = "to be read";
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: "3rem", textAlign: "center"}}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", pt: "3rem", textAlign: "center"}}>
             <Typography variant="h5">Nothing here yet!</Typography>
             <Typography variant="body2">
                 {listType === "current" ? <>Books you are <strong>currently reading</strong></>

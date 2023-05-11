@@ -62,15 +62,31 @@ const theme = createTheme({
           disableRipple: true, // No more ripple, on the whole application 💣!
         },
       },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            fontFamily: ['Varela Round', 'sans-serif'].join(','),
+          },
+        },
+        variants: [
+          {
+            props: { variant: 'navigation' },
+            style: {
+              textTransform: 'none',
+              paddingLeft: '2rem',
+              paddingRight: '2rem',
+            },
+          },
+        ],
+      },
       MuiCard: {
         styleOverrides: {
             root: {
                 backgroundColor: "rgba(255,255,255,0.5)",
                 padding: "0.75rem 1rem"
-            }
+            },
         }
       },
-
     },
   });
 
@@ -97,6 +113,12 @@ declare module '@mui/material/Typography' {
         logo: true;
         entryHeader: true;
     }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    navigation: true;
+  }
 }
 
 export default theme;

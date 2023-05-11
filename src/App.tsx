@@ -9,7 +9,7 @@ import TrackerList from './components/TrackerList';
 import AddEntry from './components/AddEntry';
 
 import theme from './components/material-ui/theme';
-import { ThemeProvider } from '@mui/material';
+import { Stack, ThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { useLocalStorage } from 'usehooks-ts';
@@ -33,26 +33,28 @@ function App() {
         <Logo/>
       </header>
       <main>
-          <TrackerNav/>
-          <Routes>
-            <Route path=''
-            element={
-              <TrackerList listType="current" userBooks={userBooks}/>
-            }/>
-            <Route path='/finished'
-            element={
-              <TrackerList listType="finished" userBooks={userBooks}/>
-            }/>
-            <Route path='/toread'
-            element={
-              <TrackerList listType="tbr" userBooks={userBooks}/>
-            }/>
-            <Route path='/new'
-            element={
-              <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/>
-            }/>
-          </Routes>
-          <Link to='/new'><FloatingActionButton/></Link>
+        <Stack spacing={2}>
+        <TrackerNav/>
+        <Routes>
+          <Route path=''
+          element={
+            <TrackerList listType="current" userBooks={userBooks}/>
+          }/>
+          <Route path='/finished'
+          element={
+            <TrackerList listType="finished" userBooks={userBooks}/>
+          }/>
+          <Route path='/toread'
+          element={
+            <TrackerList listType="tbr" userBooks={userBooks}/>
+          }/>
+          <Route path='/new'
+          element={
+            <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/>
+          }/>
+        </Routes>
+        </Stack>
+        <Link to='/new'><FloatingActionButton/></Link>
       </main>
       </CssBaseline>
     </ThemeProvider>
