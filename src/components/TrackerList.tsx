@@ -1,8 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { BookEntry } from "../types";
 import Entry from "./Entry";
-import EntryFinished from "./EntryFinished";
-import EntryTBR from "./EntryTBR";
 import EntryCard from "./material-ui/EntryCard";
 import Stack from '@mui/joy/Stack';
 

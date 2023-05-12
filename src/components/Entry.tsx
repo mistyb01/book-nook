@@ -1,10 +1,10 @@
 import { BookEntry } from "../types";
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Rating, Typography } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 //for form
 import InputLabel from '@mui/material/InputLabel';
@@ -25,21 +25,31 @@ const Entry= (props: EntryCurrentProps) => {
   const [isEditing, setEditing] = useState(false);
   
   // for form
-  const [listToAdd, setListToAdd] = useState("current");
+  const [listToAdd, setListToAdd] = useState(props.status);
   const [newPageCount, setNewPageCount] = useState(props.pageCount);
   const [newPagesRead, setNewPagesRead] = useState(props.pagesRead);
+  const [newUserRating, setNewUserRating] = useState(props.userRating);
+  const [newDateStart, setNewDateStart] = useState(props.dateStarted);
+  const [newDateFinished, setNewDateFinished] = useState(props.dateFinished);
+
+  useEffect(() => {
+    if (listToAdd === 'finished') {
+        setNewPagesRead(newPageCount)
+    } 
+  }, [listToAdd])
 
   function handleSubmit(e:React.FormEvent) {
+    setEditing(false);
     e.preventDefault();
     const updatedEntry: BookEntry = {
       // contains the unchanged info
       ...props, 
       // and the possibly updated stuff
-      userRating: props.userRating,
+      userRating: newUserRating,
       pageCount: newPageCount, 
       pagesRead: newPagesRead, 
-      dateStarted: props.dateStarted, 
-      dateFinished: props.dateFinished,
+      dateStarted: newDateStart, 
+      dateFinished: newDateFinished,
       status: listToAdd,
     }
     props.updateBook(updatedEntry);
@@ -49,8 +59,6 @@ const Entry= (props: EntryCurrentProps) => {
       return (
         <>
       <Box sx={{ display: "flex", alignItems: "center"}}>
-        <Button size="small" variant="outlined" sx={{ width: "min-content"}}
-        onClick={()=>setEditing(!isEditing)}>{isEditing ? 'close' : 'update'}</Button>
         <Box sx={{ width: '100%', ml: 1 }}>
           <Typography variant="body2">{props.pagesRead} / {props.pageCount} pages read</Typography>
           <LinearProgress variant="determinate" sx={{ borderRadius: "5px", height: "10px"}} value={progressBarVal} />
@@ -63,29 +71,35 @@ const Entry= (props: EntryCurrentProps) => {
     function FinishedEntry() {
       return (
         <>
-        {props.dateFinished && <Typography>Finished reading {props.dateFinished}</Typography>}
-        {props.userRating ? <Typography>Rating: {props.userRating}</Typography> : ''}
+        {props.dateFinished && <Typography>Finished {props.dateFinished}</Typography>}
         </>
       )
     }
 
     function TbrEntry() {
       return (
-        <Typography>Date added: {props.dateAdded}</Typography>
+        <Typography variant='body2'>Date added: {props.dateAdded}</Typography>
       )
     }
 
   return (
     <>       
-      <Box>
+      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+        <Box>
         <Typography variant="entryHeader">{props.title}</Typography>
         <Typography>{props.authors.join(', ')}</Typography>
-      </Box>
+        </Box>
+        <Button size="small" variant="outlined" sx={{ width: "min-content"}}
+        onClick={()=>setEditing(!isEditing)}>{isEditing ? 'close' : 'edit'}</Button>
+      </Stack>
       <Divider variant="middle" />
-      {props.dateStarted && <Typography>Started reading {props.dateStarted}</Typography>} 
+      {props.dateStarted && <Typography>Started {props.dateStarted}</Typography>} 
 
       {props.entryType === 'current' ? <CurrentEntry/> :
       props.entryType === 'finished' ? <FinishedEntry/> : <TbrEntry/>}
+
+      {props.userRating ? <Typography>Rating: {'★'.repeat(props.userRating)}{'☆'.repeat(5-props.userRating)}</Typography> : ''}
+
 
         {isEditing &&
         <form onSubmit={handleSubmit}>
@@ -121,7 +135,37 @@ const Entry= (props: EntryCurrentProps) => {
                   <MenuItem value="tbr">To be read</MenuItem>
               </Select>
           </FormControl>
+
+          <Stack direction="row" spacing={1}>
+            { ['current', 'finished'].includes(listToAdd) &&
+            <TextField
+                label="Date started"
+                variant="outlined"
+                type="date"
+                value={newDateStart} 
+                onChange={(e) => setNewDateStart(e.target.value)}
+                InputLabelProps={{ shrink: true }}
+                />}
+            {listToAdd === 'finished' && 
+                <TextField
+                label="Date finished"
+                variant="outlined"
+                type="date"
+                value={newDateFinished} 
+                onChange={(e) => setNewDateFinished(e.target.value)}
+                InputLabelProps={{ shrink: true }}
+                />}
+        </Stack>
+
+          <Typography component="legend">Your rating</Typography>
+          <Rating
+          name="simple-controlled"
+          value={newUserRating}
+          onChange={(e, newValue) => setNewUserRating(newValue)}
+          />
+          
           <Button type="submit">Submit</Button>
+          <Button>Delete entry</Button>
           </Stack>
         </form>
         }
