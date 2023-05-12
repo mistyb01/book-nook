@@ -8,7 +8,8 @@ import Stack from '@mui/joy/Stack';
 
 interface Props {
     userBooks: BookEntry[] | undefined;
-    listType: "current" | "finished" | "tbr"
+    listType: "current" | "finished" | "tbr",
+    handleUserBookUpdate: Function
 }
 
 const EmptyListMessage = ({listType}:{listType:string}) => {
@@ -25,7 +26,7 @@ const EmptyListMessage = ({listType}:{listType:string}) => {
     )
 }
 
-const TrackerList : React.FC<Props> = ({userBooks, listType}) => {
+const TrackerList : React.FC<Props> = ({userBooks, listType, handleUserBookUpdate}) => {
     if (!userBooks) { return (<EmptyListMessage listType={listType}/>) }
 
     const filteredBooks = userBooks.filter((book) => book.status === listType);
@@ -38,7 +39,7 @@ const TrackerList : React.FC<Props> = ({userBooks, listType}) => {
         {filteredBooks.map((book) => 
             <EntryCard key={book.id}>
                 {listType === "current" ? 
-                <EntryCurrent key={book.id} {...book}/> :
+                <EntryCurrent key={book.id} {...book} /> :
                 listType === "finished" ? 
                 <EntryFinished key={book.id} {...book}/> :
                 <EntryTBR key={book.id} {...book}/>}
