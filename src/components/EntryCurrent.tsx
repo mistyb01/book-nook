@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import React, { useState } from "react";
 
 //for form
 import InputLabel from '@mui/material/InputLabel';
@@ -13,8 +13,23 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Stack, TextField } from "@mui/material";
 
+type FunctionalProp = { updateBook: Function }
+type EntryCurrentProps = BookEntry & FunctionalProp
 
-const EntryCurrent = ({title, authors, pageCount, pagesRead, dateStarted}: BookEntry, {updateBook} : {updateBook: Function}) => {
+const EntryCurrent = 
+({id,
+  title, 
+  authors, 
+  pageCount, 
+  pagesRead, 
+  dateStarted, 
+  dateFinished,
+  publishedDate,
+  publisher,
+  userRating,
+  status,
+  dateAdded,
+  updateBook}: EntryCurrentProps) => {
   let progressBarVal = (pagesRead / pageCount) * 100;
   const [isEditing, setEditing] = useState(false);
   
@@ -23,9 +38,27 @@ const EntryCurrent = ({title, authors, pageCount, pagesRead, dateStarted}: BookE
   const [newPageCount, setNewPageCount] = useState(pageCount);
   const [newPagesRead, setNewPagesRead] = useState(pagesRead);
 
-  function handleSubmit(e:any) {
-    console.log(e.target)
+  function handleSubmit(e:React.FormEvent) {
+    e.preventDefault();
+    const updatedEntry: BookEntry = {
+      //unchanged stuff... there has to be a better way :(
+      id: id,
+      title: title, 
+      authors: authors, 
+      publishedDate: publishedDate,
+      publisher: publisher,
+      dateAdded: dateAdded,
+      //possibly updated stuff
+      userRating: userRating,
+      pageCount: newPageCount, 
+      pagesRead: newPagesRead, 
+      dateStarted: dateStarted, 
+      dateFinished: dateFinished,
+      status: listToAdd,
+    }
+    updateBook(updatedEntry);
   }
+
   return (
     <>        
         <Box>
@@ -36,7 +69,7 @@ const EntryCurrent = ({title, authors, pageCount, pagesRead, dateStarted}: BookE
         {dateStarted && <Typography>Started reading {dateStarted}</Typography>}
         <Box sx={{ display: "flex", alignItems: "center"}}>
           <Button size="small" variant="outlined" sx={{ width: "min-content"}}
-          onClick={()=>setEditing(!isEditing)}>update</Button>
+          onClick={()=>setEditing(!isEditing)}>{isEditing ? 'close' : 'update'}</Button>
           <Box sx={{ width: '100%', ml: 1 }}>
             <Typography variant="body2">{pagesRead} / {pageCount} pages read</Typography>
             <LinearProgress variant="determinate" sx={{ borderRadius: "5px", height: "10px"}} value={progressBarVal} />
@@ -76,6 +109,7 @@ const EntryCurrent = ({title, authors, pageCount, pagesRead, dateStarted}: BookE
                   <MenuItem value="tbr">To be read</MenuItem>
               </Select>
           </FormControl>
+          <Button type="submit">Submit</Button>
         </form>
         }
     </>

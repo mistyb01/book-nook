@@ -18,11 +18,22 @@ import { BookEntry } from './types';
 function App() {
   const [userBooks, setUserBooks] = useLocalStorage<BookEntry[] | undefined>('userBookData', undefined)
 
-  function updateUserBooks(newBook:BookEntry) {
+  // adds new book to localstorage array
+  function addUserBook(newBook:BookEntry) {
     if (!userBooks) {
       setUserBooks([newBook]);
     } else {
       setUserBooks([...userBooks, newBook]);
+    }
+  }
+
+  // updates information about a book stored in the array
+  function updateBookEntry(updatedBook:BookEntry) {
+    console.log(updatedBook);
+    if (userBooks) {
+      let index = userBooks.findIndex(entry => entry.id === updatedBook.id);
+      userBooks[index] = updatedBook;
+      setUserBooks(userBooks);
     }
   }
 
@@ -38,19 +49,22 @@ function App() {
         <Routes>
           <Route path=''
           element={
-            <TrackerList listType="current" userBooks={userBooks}/>
+            <TrackerList listType="current" userBooks={userBooks}
+            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}/>
           }/>
           <Route path='/finished'
           element={
-            <TrackerList listType="finished" userBooks={userBooks}/>
+            <TrackerList listType="finished" userBooks={userBooks}
+            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}/>
           }/>
           <Route path='/toread'
           element={
-            <TrackerList listType="tbr" userBooks={userBooks}/>
+            <TrackerList listType="tbr" userBooks={userBooks}
+            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}/>
           }/>
           <Route path='/new'
           element={
-            <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>updateUserBooks(newBook)}/>
+            <AddEntry handleUserBookUpdate={(newBook:BookEntry)=>addUserBook(newBook)}/>
           }/>
         </Routes>
         </Stack>

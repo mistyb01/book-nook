@@ -39,7 +39,7 @@ const TrackerList : React.FC<Props> = ({userBooks, listType, handleUserBookUpdat
         {filteredBooks.map((book) => 
             <EntryCard key={book.id}>
                 {listType === "current" ? 
-                <EntryCurrent key={book.id} {...book} /> :
+                <EntryCurrent key={book.id} {...book} updateBook={(updatedEntry:BookEntry)=>handleUserBookUpdate(updatedEntry)} /> :
                 listType === "finished" ? 
                 <EntryFinished key={book.id} {...book}/> :
                 <EntryTBR key={book.id} {...book}/>}
