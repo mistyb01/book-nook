@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { BookEntry } from "../types";
-import EntryCurrent from "./EntryCurrent";
+import Entry from "./Entry";
 import EntryFinished from "./EntryFinished";
 import EntryTBR from "./EntryTBR";
 import EntryCard from "./material-ui/EntryCard";
@@ -38,11 +38,8 @@ const TrackerList : React.FC<Props> = ({userBooks, listType, handleUserBookUpdat
         <Stack spacing={3}>
         {filteredBooks.map((book) => 
             <EntryCard key={book.id}>
-                {listType === "current" ? 
-                <EntryCurrent key={book.id} {...book} updateBook={(updatedEntry:BookEntry)=>handleUserBookUpdate(updatedEntry)} /> :
-                listType === "finished" ? 
-                <EntryFinished key={book.id} {...book}/> :
-                <EntryTBR key={book.id} {...book}/>}
+                <Entry key={book.id} {...book} entryType={listType}
+                updateBook={(updatedEntry:BookEntry)=>handleUserBookUpdate(updatedEntry)} />
             </EntryCard>
         )}
         </Stack>

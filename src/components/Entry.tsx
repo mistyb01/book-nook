@@ -13,11 +13,14 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Stack, TextField } from "@mui/material";
 
-type FunctionalProp = { updateBook: Function }
-type EntryCurrentProps = BookEntry & FunctionalProp
+type ExtraProps = { 
+  updateBook: Function,
+  entryType: string
+}
 
-const EntryCurrent = 
-(props: EntryCurrentProps) => {
+type EntryCurrentProps = BookEntry & ExtraProps
+
+const Entry= (props: EntryCurrentProps) => {
   let progressBarVal = (props.pagesRead / props.pageCount) * 100;
   const [isEditing, setEditing] = useState(false);
   
@@ -41,23 +44,48 @@ const EntryCurrent =
     }
     props.updateBook(updatedEntry);
   }
+ 
+  function CurrentEntry() {
+      return (
+        <>
+      <Box sx={{ display: "flex", alignItems: "center"}}>
+        <Button size="small" variant="outlined" sx={{ width: "min-content"}}
+        onClick={()=>setEditing(!isEditing)}>{isEditing ? 'close' : 'update'}</Button>
+        <Box sx={{ width: '100%', ml: 1 }}>
+          <Typography variant="body2">{props.pagesRead} / {props.pageCount} pages read</Typography>
+          <LinearProgress variant="determinate" sx={{ borderRadius: "5px", height: "10px"}} value={progressBarVal} />
+        </Box>
+      </Box>
+      </>
+      )
+    }
+
+    function FinishedEntry() {
+      return (
+        <>
+        {props.dateFinished && <Typography>Finished reading {props.dateFinished}</Typography>}
+        {props.userRating ? <Typography>Rating: {props.userRating}</Typography> : ''}
+        </>
+      )
+    }
+
+    function TbrEntry() {
+      return (
+        <Typography>Date added: {props.dateAdded}</Typography>
+      )
+    }
 
   return (
-    <>        
-        <Box>
-          <Typography variant="entryHeader">{props.title}</Typography>
-          <Typography>{props.authors.join(', ')}</Typography>
-        </Box>
-        <Divider variant="middle" />
-        {props.dateStarted && <Typography>Started reading {props.dateStarted}</Typography>}
-        <Box sx={{ display: "flex", alignItems: "center"}}>
-          <Button size="small" variant="outlined" sx={{ width: "min-content"}}
-          onClick={()=>setEditing(!isEditing)}>{isEditing ? 'close' : 'update'}</Button>
-          <Box sx={{ width: '100%', ml: 1 }}>
-            <Typography variant="body2">{props.pagesRead} / {props.pageCount} pages read</Typography>
-            <LinearProgress variant="determinate" sx={{ borderRadius: "5px", height: "10px"}} value={progressBarVal} />
-          </Box>
-        </Box>
+    <>       
+      <Box>
+        <Typography variant="entryHeader">{props.title}</Typography>
+        <Typography>{props.authors.join(', ')}</Typography>
+      </Box>
+      <Divider variant="middle" />
+      {props.dateStarted && <Typography>Started reading {props.dateStarted}</Typography>} 
+
+      {props.entryType === 'current' ? <CurrentEntry/> :
+      props.entryType === 'finished' ? <FinishedEntry/> : <TbrEntry/>}
 
         {isEditing &&
         <form onSubmit={handleSubmit}>
@@ -101,4 +129,4 @@ const EntryCurrent =
   )
 }
 
-export default EntryCurrent;
+export default Entry;
