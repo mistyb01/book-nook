@@ -19,4 +19,4 @@ export type BookEntryData = {
 
  // BookEntry is an intersection-- 
  // it must have ALL of the keys in both Book and BookEntryData 
-export type BookEntry = Book & BookEntryData;
+export type BookEntry = Readonly<Book> & BookEntryData;

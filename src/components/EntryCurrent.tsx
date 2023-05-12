@@ -17,68 +17,51 @@ type FunctionalProp = { updateBook: Function }
 type EntryCurrentProps = BookEntry & FunctionalProp
 
 const EntryCurrent = 
-({id,
-  title, 
-  authors, 
-  pageCount, 
-  pagesRead, 
-  dateStarted, 
-  dateFinished,
-  publishedDate,
-  publisher,
-  userRating,
-  status,
-  dateAdded,
-  updateBook}: EntryCurrentProps) => {
-  let progressBarVal = (pagesRead / pageCount) * 100;
+(props: EntryCurrentProps) => {
+  let progressBarVal = (props.pagesRead / props.pageCount) * 100;
   const [isEditing, setEditing] = useState(false);
   
   // for form
   const [listToAdd, setListToAdd] = useState("current");
-  const [newPageCount, setNewPageCount] = useState(pageCount);
-  const [newPagesRead, setNewPagesRead] = useState(pagesRead);
+  const [newPageCount, setNewPageCount] = useState(props.pageCount);
+  const [newPagesRead, setNewPagesRead] = useState(props.pagesRead);
 
   function handleSubmit(e:React.FormEvent) {
     e.preventDefault();
     const updatedEntry: BookEntry = {
-      //unchanged stuff... there has to be a better way :(
-      id: id,
-      title: title, 
-      authors: authors, 
-      publishedDate: publishedDate,
-      publisher: publisher,
-      dateAdded: dateAdded,
-      //possibly updated stuff
-      userRating: userRating,
+      // contains the unchanged info
+      ...props, 
+      // and the possibly updated stuff
+      userRating: props.userRating,
       pageCount: newPageCount, 
       pagesRead: newPagesRead, 
-      dateStarted: dateStarted, 
-      dateFinished: dateFinished,
+      dateStarted: props.dateStarted, 
+      dateFinished: props.dateFinished,
       status: listToAdd,
     }
-    updateBook(updatedEntry);
+    props.updateBook(updatedEntry);
   }
 
   return (
     <>        
         <Box>
-          <Typography variant="entryHeader">{title}</Typography>
-          <Typography>{authors.join(', ')}</Typography>
+          <Typography variant="entryHeader">{props.title}</Typography>
+          <Typography>{props.authors.join(', ')}</Typography>
         </Box>
         <Divider variant="middle" />
-        {dateStarted && <Typography>Started reading {dateStarted}</Typography>}
+        {props.dateStarted && <Typography>Started reading {props.dateStarted}</Typography>}
         <Box sx={{ display: "flex", alignItems: "center"}}>
           <Button size="small" variant="outlined" sx={{ width: "min-content"}}
           onClick={()=>setEditing(!isEditing)}>{isEditing ? 'close' : 'update'}</Button>
           <Box sx={{ width: '100%', ml: 1 }}>
-            <Typography variant="body2">{pagesRead} / {pageCount} pages read</Typography>
+            <Typography variant="body2">{props.pagesRead} / {props.pageCount} pages read</Typography>
             <LinearProgress variant="determinate" sx={{ borderRadius: "5px", height: "10px"}} value={progressBarVal} />
           </Box>
         </Box>
 
-
         {isEditing &&
         <form onSubmit={handleSubmit}>
+          <Stack spacing={1} alignItems="flex-start">
           <Stack direction="row" spacing={1}>
           { ['current', 'finished'].includes(listToAdd) &&
           <TextField
@@ -96,6 +79,7 @@ const EntryCurrent =
               onChange={(e) => setNewPageCount(parseInt(e.target.value))}
           />
           </Stack>
+          
           <FormControl sx={{width:"75%"}}>
               <InputLabel>Change status</InputLabel>
               <Select
@@ -110,6 +94,7 @@ const EntryCurrent =
               </Select>
           </FormControl>
           <Button type="submit">Submit</Button>
+          </Stack>
         </form>
         }
     </>
