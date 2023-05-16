@@ -15,6 +15,7 @@ import { Stack, TextField } from "@mui/material";
 
 type ExtraProps = { 
   updateBook: Function,
+  deleteBook: Function,
   entryType: string
 }
 
@@ -54,6 +55,8 @@ const Entry= (props: EntryCurrentProps) => {
     }
     props.updateBook(updatedEntry);
   }
+
+  
  
   function CurrentEntry() {
       return (
@@ -165,7 +168,7 @@ const Entry= (props: EntryCurrentProps) => {
           />
           
           <Button type="submit">Submit</Button>
-          <Button>Delete entry</Button>
+          <Button onClick={()=>props.deleteBook(props.id)}>Delete book</Button>
           </Stack>
         </form>
         }

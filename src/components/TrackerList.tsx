@@ -7,7 +7,8 @@ import Stack from '@mui/joy/Stack';
 interface Props {
     userBooks: BookEntry[] | undefined;
     listType: "current" | "finished" | "tbr",
-    handleUserBookUpdate: Function
+    handleUserBookUpdate: Function,
+    handleBookDelete?: Function
 }
 
 const EmptyListMessage = ({listType}:{listType:string}) => {
@@ -24,7 +25,7 @@ const EmptyListMessage = ({listType}:{listType:string}) => {
     )
 }
 
-const TrackerList : React.FC<Props> = ({userBooks, listType, handleUserBookUpdate}) => {
+const TrackerList : React.FC<Props> = ({userBooks, listType, handleUserBookUpdate, handleBookDelete}) => {
     if (!userBooks) { return (<EmptyListMessage listType={listType}/>) }
 
     const filteredBooks = userBooks.filter((book) => book.status === listType);
@@ -37,7 +38,8 @@ const TrackerList : React.FC<Props> = ({userBooks, listType, handleUserBookUpdat
         {filteredBooks.map((book) => 
             <EntryCard key={book.id}>
                 <Entry key={book.id} {...book} entryType={listType}
-                updateBook={(updatedEntry:BookEntry)=>handleUserBookUpdate(updatedEntry)} />
+                updateBook={(updatedEntry:BookEntry)=>handleUserBookUpdate(updatedEntry)}
+                deleteBook={(book:BookEntry)=>handleBookDelete(book)} />
             </EntryCard>
         )}
         </Stack>

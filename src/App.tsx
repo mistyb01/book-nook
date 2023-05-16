@@ -37,6 +37,17 @@ function App() {
     }
   }
 
+  
+  // deletes a book
+  function deleteBookEntry(bookId:string) {
+    if (userBooks) {
+      let index = userBooks.findIndex(entry => entry.id === bookId);
+      userBooks?.splice(index, 1);
+      console.log(userBooks);
+      setUserBooks(userBooks);
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -50,17 +61,20 @@ function App() {
           <Route path=''
           element={
             <TrackerList listType="current" userBooks={userBooks}
-            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}/>
+            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}
+            handleBookDelete={(bookId:string)=>deleteBookEntry(bookId)}/>
           }/>
           <Route path='/finished'
           element={
             <TrackerList listType="finished" userBooks={userBooks}
-            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}/>
+            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}
+            handleBookDelete={(bookId:string)=>deleteBookEntry(bookId)}/>
           }/>
           <Route path='/toread'
           element={
             <TrackerList listType="tbr" userBooks={userBooks}
-            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}/>
+            handleUserBookUpdate={(newBook:BookEntry)=>updateBookEntry(newBook)}
+            handleBookDelete={(bookId:string)=>deleteBookEntry(bookId)}/>
           }/>
           <Route path='/new'
           element={
