@@ -1,4 +1,5 @@
 import './App.css'
+import { useState, useEffect } from 'react';
 import { Route, Routes,  } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +8,7 @@ import TrackerNav from './components/TrackerNav';
 import FloatingActionButton from './components/material-ui/FloatingActionButton';
 import TrackerList from './components/TrackerList';
 import AddEntry from './components/AddEntry';
+import AlertPopup from './components/AlertPopup';
 
 import theme from './components/material-ui/theme';
 import { Stack, ThemeProvider } from '@mui/material';
@@ -17,6 +19,8 @@ import { BookEntry } from './types';
 
 function App() {
   const [userBooks, setUserBooks] = useLocalStorage<BookEntry[] | undefined>('userBookData', undefined)
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string | undefined>(undefined);
 
   // adds new book to localstorage array
   function addUserBook(newBook:BookEntry) {
@@ -25,6 +29,9 @@ function App() {
     } else {
       setUserBooks([...userBooks, newBook]);
     }
+        //notif
+        setPopupMessage('Added book!')
+
   }
 
   // updates information about a book stored in the array
@@ -34,6 +41,8 @@ function App() {
       let index = userBooks.findIndex(entry => entry.id === updatedBook.id);
       userBooks[index] = updatedBook;
       setUserBooks(userBooks);
+      //notif
+      setPopupMessage('Updated entry!')
     }
   }
 
@@ -45,6 +54,8 @@ function App() {
       userBooks?.splice(index, 1);
       console.log(userBooks);
       setUserBooks(userBooks);
+      //notif
+      setPopupMessage('Deleted entry!')
     }
   }
 
@@ -55,6 +66,7 @@ function App() {
         <Logo/>
       </header>
       <main>
+        {popupMessage && <AlertPopup message={popupMessage}/>}
         <Stack spacing={2}>
         <TrackerNav/>
         <Routes>

@@ -25,18 +25,35 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let formattedDate = mm + '/' + dd + '/' + today.getFullYear();
 
-    const [listToAdd, setListToAdd] = useState("current");
-    const [pageCount, setPageCount] = useState(book.pageCount);
-    const [pagesRead, setPagesRead] = useState(0);
-    const [rating, setRating] = useState<number | null>(0);
-    const [dateStart, setDateStart] = useState<string | undefined>(undefined);
-    const [dateFinished, setDateFinished] = useState<string | undefined>(undefined);
+    const [formInputs, setFormInputs] = useState({
+        listToAdd: "current",
+        pageCount: book.pageCount,
+        pagesRead: 0,
+        rating: 0,
+        dateStart: undefined,
+        dateFinished: undefined
+    })
 
     useEffect(() => {
-        if (listToAdd === 'finished') {
-            setPagesRead(pageCount)
-        } else setPagesRead(0)
-    }, [listToAdd])
+        if (formInputs.listToAdd === 'finished') {
+            setFormInputs({
+                ...formInputs,
+                pagesRead: book.pageCount
+            })
+        } else {
+            setFormInputs({
+                ...formInputs,
+                pagesRead: 0
+            })
+        }
+    }, [formInputs.listToAdd])
+
+    function handleFormChange(e: any) {
+        setFormInputs({
+            ...formInputs,
+            [e.target.name]: e.target.value
+        })
+    }
 
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -44,12 +61,12 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
 
         const newBook : BookEntry = {
             ...book,
-            status: listToAdd, 
-            pagesRead: pagesRead,
-            userRating: rating,
+            status: formInputs.listToAdd, 
+            pagesRead: formInputs.pagesRead,
+            userRating: formInputs.rating,
             dateAdded: formattedDate,
-            dateStarted: dateStart,
-            dateFinished: dateFinished,
+            dateStarted: formInputs.dateStart,
+            dateFinished: formInputs.dateFinished,
         }
         sendBookData(newBook);
     }
@@ -70,11 +87,12 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
                 <FormControl sx={{width:"75%"}}>
                     <InputLabel>List to add</InputLabel>
                     <Select
+                        name="listToAdd"
                         labelId="select-list-label"
                         id="select-list"
-                        value={listToAdd}
+                        value={formInputs.listToAdd}
                         label="Select List"
-                        onChange={(e:any)=>setListToAdd(e.target.value)}>
+                        onChange={handleFormChange}>
                         <MenuItem value="current">Currently reading</MenuItem>
                         <MenuItem value="finished">Finished</MenuItem>
                         <MenuItem value="tbr">To be read</MenuItem>
@@ -83,50 +101,54 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
 
                 <Stack direction="row" spacing={1}>
                 <TextField
+                    name="pageCount"
                     label="Page Count"
                     variant="outlined"
                     type="number"
-                    value={pageCount} 
-                    onChange={(e) => setPageCount(parseInt(e.target.value))}
+                    value={formInputs.pageCount} 
+                    onChange={handleFormChange}
                 />
                 
-                { ['current', 'finished'].includes(listToAdd) &&
+                { ['current', 'finished'].includes(formInputs.listToAdd) &&
                 <TextField
+                    name="pagesRead"
                     label="Pages Read"
                     variant="outlined"
                     type="number"
-                    value={pagesRead} 
-                    onChange={(e) => setPagesRead(parseInt(e.target.value))}/>
+                    value={formInputs.pagesRead} 
+                    onChange={handleFormChange}/>
                 }
                 </Stack>
 
                 <Stack direction="row" spacing={1}>
-                { ['current', 'finished'].includes(listToAdd) &&
+                { ['current', 'finished'].includes(formInputs.listToAdd) &&
                 <TextField
+                    name="dateStarted"
                     label="Date started"
                     variant="outlined"
                     type="date"
-                    value={dateFinished} 
-                    onChange={(e) => setDateStart(e.target.value)}
+                    value={formInputs.dateFinished} 
+                    onChange={handleFormChange}
                     InputLabelProps={{ shrink: true }}
                     />}
-                {listToAdd === 'finished' && 
+                {formInputs.listToAdd === 'finished' && 
                     <TextField
+                    name="dateFinished"
                     label="Date finished"
                     variant="outlined"
                     type="date"
-                    value={dateFinished} 
-                    onChange={(e) => setDateFinished(e.target.value)}
+                    value={formInputs.dateFinished} 
+                    onChange={handleFormChange}
                     InputLabelProps={{ shrink: true }}
                     />}
                 </Stack>
-                {listToAdd === 'finished' && 
+                {formInputs.listToAdd === 'finished' && 
                     <>
                     <Typography component="legend">Your rating</Typography>
                     <Rating
-                    name="simple-controlled"
-                    value={rating}
-                    onChange={(e, newValue) => setRating(newValue)}
+                    name="rating"
+                    value={formInputs.rating}
+                    onChange={handleFormChange}
                     />
                     </>
                 }

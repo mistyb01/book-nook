@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react'; 
+import { useState, FormEvent, useEffect } from 'react'; 
 import { Book, BookEntry } from '../types';
 import SearchResult from './SearchResult';
 import NewEntryForm from './NewEntryForm';
@@ -15,6 +15,11 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
     const [query, setQuery] = useState('');
 
     const [selectedBook, setSelectedBook] = useState<Book | undefined>(undefined);
+    const [showForm, setShowForm] = useState(false);
+
+    useEffect(() => {
+      selectedBook ? setShowForm(true) : setShowForm(false);
+    }, [selectedBook])
 
     async function handleForm(e:FormEvent) {
         try {
@@ -60,7 +65,7 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
 
           <form onSubmit={handleForm}>
             <Stack direction="row" spacing={1}>
-              <TextField fullWidth
+              <TextField fullWidth autoFocus
                 id="searchInput"
                 label="Find a book by title, author, ISBN"
                 variant="filled"
