@@ -87,23 +87,26 @@ const Entry= (props: EntryCurrentProps) => {
 
   return (
     <>       
-      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-        <img src={props.image}/>
-        <Box>
-        <Typography variant="entryHeader">{props.title}</Typography>
-        <Typography>{props.authors.join(', ')}</Typography>
-        </Box>
-        <Button size="small" variant="outlined" sx={{ width: "min-content"}}
-        onClick={()=>setEditing(!isEditing)}>{isEditing ? 'close' : 'edit'}</Button>
-      </Stack>
-      <Divider variant="middle" />
-      {props.dateStarted && <Typography>Started {props.dateStarted}</Typography>} 
-
-      {props.entryType === 'current' ? <CurrentEntry/> :
-      props.entryType === 'finished' ? <FinishedEntry/> : <TbrEntry/>}
-
-      {props.userRating ? <Typography>Rating: {'★'.repeat(props.userRating)}{'☆'.repeat(5-props.userRating)}</Typography> : ''}
-
+        <Stack direction="row" spacing={2}>
+          <img src={props.image}/>
+          <Stack spacing={2} sx={{width: "100%"}}>
+            <Box>
+              <Typography variant="entryHeader">{props.title}</Typography>
+              <Typography>{props.authors.join(', ')}</Typography>
+              <Divider variant="middle" />
+            </Box>
+            {props.dateStarted && <Typography>Started {props.dateStarted}</Typography>} 
+            {props.entryType === 'current' ? <CurrentEntry/> :
+            props.entryType === 'finished' ? <FinishedEntry/> : 
+            <TbrEntry/>}
+            {props.userRating ? <Typography>Rating: {'★'.repeat(props.userRating)}{'☆'.repeat(5-props.userRating)}</Typography> : ''}
+            <Button size="small" variant="outlined" sx={{ 
+              width: "min-content",
+              height: "min-content"
+            }}
+            onClick={()=>setEditing(!isEditing)}>{isEditing ? 'close' : 'edit'}</Button>
+          </Stack>
+        </Stack>
 
         {isEditing &&
         <form onSubmit={handleSubmit}>
