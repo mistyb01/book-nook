@@ -92,18 +92,22 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
             </Box>
             }
             {error && <p>Error: {error.message}</p>}
-            {bookResults && bookResults.map((item) => (
-            <SearchResult 
+            {bookResults && bookResults.map((item) => {
+              let bookObj = {
+                id: item.id,
+                title:  item.title,
+                authors:  item.authors,
+                publisher:  item.publisher,
+                publishedDate:  item.publishedDate,
+                pageCount:  item.pageCount,
+                image:  item.image,
+              }
+            return (<SearchResult 
                 key={item.id}
-                id={item.id}
-                title={item.title}
-                authors={item.authors}
-                publisher={item.publisher}
-                publishedDate={item.publishedDate}
-                pageCount={item.pageCount}
-                image={item.image}
-                handleSetSelectedBook={(book: Book) => setSelectedBook(book)}
-            />))}
+                book={bookObj}
+                handleSetSelectedBook={(book: Book) => setSelectedBook(book)}/>
+              )
+            })}
           </Stack>
         </Stack>
     )
