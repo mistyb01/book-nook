@@ -48,7 +48,7 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
       function reformatResults(dataArray : []) : Book[] {
         
         let formattedData = dataArray.map((item : any)=>{
-          const newObj = {
+          const newObj:Book = {
             "id": item.id,
             "title": item.volumeInfo.title,
             "authors": item.volumeInfo.authors,
@@ -94,13 +94,7 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
             {error && <p>Error: {error.message}</p>}
             {bookResults && bookResults.map((item) => {
               let bookObj = {
-                id: item.id,
-                title:  item.title,
-                authors:  item.authors,
-                publisher:  item.publisher,
-                publishedDate:  item.publishedDate,
-                pageCount:  item.pageCount,
-                image:  item.image,
+                ...item
               }
             return (<SearchResult 
                 key={item.id}

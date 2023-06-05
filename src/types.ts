@@ -5,7 +5,7 @@ export type Book = {
     publisher: string,
     pageCount: number,
     publishedDate: string,
-    image?: string
+    image?: string 
     // category: string[]
 }
 

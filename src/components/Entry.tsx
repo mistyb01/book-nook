@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Stack, TextField } from "@mui/material";
+import DefaultCover from '../assets/defaultcover.png';
 
 type ExtraProps = { 
   updateBook: Function,
@@ -33,6 +34,7 @@ const Entry= (props: EntryCurrentProps) => {
   const [newDateStart, setNewDateStart] = useState(props.dateStarted);
   const [newDateFinished, setNewDateFinished] = useState(props.dateFinished);
 
+  
   useEffect(() => {
     if (listToAdd === 'finished') {
         setNewPagesRead(newPageCount)
@@ -88,7 +90,9 @@ const Entry= (props: EntryCurrentProps) => {
   return (
     <>       
         <Stack direction="row" spacing={2}>
-          <img src={props.image}/>
+          
+          {props.image ? <img src={props.image}/> : <img src={DefaultCover}/>}
+          
           <Stack spacing={2} sx={{width: "100%"}}>
             <Box>
               <Typography variant="entryHeader">{props.title}</Typography>

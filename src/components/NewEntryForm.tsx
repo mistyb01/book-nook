@@ -55,7 +55,6 @@ const NewEntryForm: React.FC<NewEntryProps> = ({book, sendBookData}) => {
         })
     }
 
-
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
 

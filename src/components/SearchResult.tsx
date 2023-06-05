@@ -8,7 +8,6 @@ type Props = {
 }
 
 const SearchResult = ({book, handleSetSelectedBook}: Props) => {
-    // const bookData = {id,title,authors,publisher,publishedDate,pageCount, image} // can i shorten this 
     return (
         <Card variant="outlined" key={book.id}  sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Stack direction="row" spacing={2}>
