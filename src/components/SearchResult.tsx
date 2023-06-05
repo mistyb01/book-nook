@@ -4,8 +4,8 @@ import { Card, Button, CardContent, Typography, CardActions } from '@mui/materia
 
 type Props = Book & {handleSetSelectedBook: Function}
 
-const SearchResult = ({id, title, authors, publisher, publishedDate, pageCount, handleSetSelectedBook }: Props) => {
-    const book = {id,title,authors,publisher,publishedDate,pageCount} // can i shorten this 
+const SearchResult = ({id, title, authors, publisher, publishedDate, pageCount, handleSetSelectedBook, image }: Props) => {
+    const book = {id,title,authors,publisher,publishedDate,pageCount, image} // can i shorten this 
     return (
         <Card variant="outlined" key={id}  sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <CardContent>

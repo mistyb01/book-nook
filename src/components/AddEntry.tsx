@@ -46,14 +46,22 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
       }
     
       function reformatResults(dataArray : []) : Book[] {
-        let formattedData = dataArray.map((item : any)=>({
-          "id": item.id,
-          "title": item.volumeInfo.title,
-          "authors": item.volumeInfo.authors,
-          "publisher": item.volumeInfo.publisher,
-          "pageCount": item.volumeInfo.pageCount,
-          "publishedDate": item.volumeInfo.publishedDate
-        }));
+        
+        let formattedData = dataArray.map((item : any)=>{
+          const newObj = {
+            "id": item.id,
+            "title": item.volumeInfo.title,
+            "authors": item.volumeInfo.authors,
+            "publisher": item.volumeInfo.publisher,
+            "pageCount": item.volumeInfo.pageCount,
+            "publishedDate": item.volumeInfo.publishedDate,
+            "image": undefined
+          }
+          if (item.volumeInfo.imageLinks.thumbnail) {
+            newObj.image = item.volumeInfo.imageLinks.thumbnail.toString()
+          }
+            return newObj;
+        });
         return formattedData;
       }
     
@@ -93,6 +101,7 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
                 publisher={item.publisher}
                 publishedDate={item.publishedDate}
                 pageCount={item.pageCount}
+                image={item.image}
                 handleSetSelectedBook={(book: Book) => setSelectedBook(book)}
             />))}
           </Stack>

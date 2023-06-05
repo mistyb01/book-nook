@@ -4,7 +4,8 @@ export type Book = {
     authors: string[],
     publisher: string,
     pageCount: number,
-    publishedDate: string
+    publishedDate: string,
+    image?: string
     // category: string[]
 }
 
