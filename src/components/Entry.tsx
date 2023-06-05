@@ -88,6 +88,7 @@ const Entry= (props: EntryCurrentProps) => {
   return (
     <>       
       <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+        <img src={props.image}/>
         <Box>
         <Typography variant="entryHeader">{props.title}</Typography>
         <Typography>{props.authors.join(', ')}</Typography>

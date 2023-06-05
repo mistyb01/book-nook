@@ -57,7 +57,7 @@ const AddEntry = ({handleUserBookUpdate} : {handleUserBookUpdate: Function}) => 
             "publishedDate": item.volumeInfo.publishedDate,
             "image": undefined
           }
-          if (item.volumeInfo.imageLinks.thumbnail) {
+          if (item.volumeInfo.imageLinks) {
             newObj.image = item.volumeInfo.imageLinks.thumbnail.toString()
           }
             return newObj;

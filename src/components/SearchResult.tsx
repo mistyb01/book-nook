@@ -8,6 +8,7 @@ const SearchResult = ({id, title, authors, publisher, publishedDate, pageCount, 
     const book = {id,title,authors,publisher,publishedDate,pageCount, image} // can i shorten this 
     return (
         <Card variant="outlined" key={id}  sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <img src={image}/>
             <CardContent>
                 <Typography variant="entryHeader">{title}</Typography>
                 <Typography variant="body1">
