@@ -6,13 +6,10 @@ import Divider from '@mui/material/Divider';
 import Button from "@mui/material/Button";
 import React, { useEffect, useState } from "react";
 
-//for form
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { Stack, TextField } from "@mui/material";
+import { Stack } from "@mui/material";
 import DefaultCover from '../assets/defaultcover.png';
+
+import EntryEditor from "./EntryEditor";
 
 type ExtraProps = { 
   updateBook: Function,
@@ -44,7 +41,6 @@ const Entry= (props: EntryCurrentProps) => {
 
   useEffect(() => {
     if (formInputs.status === 'finished') {
-        // setNewPagesRead(newPageCount)
         setFormInputs({
           ...formInputs,
           pagesRead: formInputs.pageCount
@@ -119,77 +115,13 @@ const Entry= (props: EntryCurrentProps) => {
         </Stack>
 
         {isEditing &&
-        <form onSubmit={handleSubmit}>
-          <Stack spacing={1} alignItems="flex-start">
-          <Stack direction="row" spacing={1}>
-          { ['current', 'finished'].includes(formInputs.status) &&
-          <TextField
-              name="pagesRead"
-              label="Pages Read"
-              variant="outlined"
-              type="number"
-              value={formInputs.pagesRead} 
-              onChange={handleFormChange}/>}
-
-          <TextField
-              name="pageCount"
-              label="Page Count"
-              variant="outlined"
-              type="number"
-              value={formInputs.pageCount} 
-              onChange={handleFormChange}
+          <EntryEditor
+            bookId={props.id}
+            handleFormSubmit={(e:any)=>handleSubmit(e)}
+            handleFormChange={(e:any)=>handleFormChange(e)}
+            handleDelete={(id:string)=>props.deleteBook(id)}
+            formInputs={formInputs}
           />
-          </Stack>
-          
-          <FormControl sx={{width:"75%"}}>
-              <InputLabel>Change status</InputLabel>
-              <Select
-                  name="status"
-                  labelId="select-list-label"
-                  id="select-list"
-                  value={formInputs.status}
-                  label="Select List"
-                  onChange={handleFormChange}>
-                  <MenuItem value="current">Currently reading</MenuItem>
-                  <MenuItem value="finished">Finished</MenuItem>
-                  <MenuItem value="tbr">To be read</MenuItem>
-              </Select>
-          </FormControl>
-
-          <Stack direction="row" spacing={1}>
-            { ['current', 'finished'].includes(formInputs.status) &&
-            <TextField
-                name="dateStart"
-                label="Date started"
-                variant="outlined"
-                type="date"
-                value={formInputs.dateStart} 
-                onChange={handleFormChange}
-                InputLabelProps={{ shrink: true }}
-                />}
-            {formInputs.status === 'finished' && 
-                <TextField
-                name="dateFinished"
-                label="Date finished"
-                variant="outlined"
-                type="date"
-                value={formInputs.dateFinished} 
-                onChange={handleFormChange}
-                InputLabelProps={{ shrink: true }}
-                />}
-        </Stack>
-
-          <Typography component="legend">Your rating</Typography>
-          <Rating
-          name="userRating"
-          value={formInputs.userRating}
-          onChange={handleFormChange}
-          />
-          
-          <Button type="submit">Submit</Button>
-          <Button onClick={()=>props.deleteBook(props.id)}>Delete book</Button>
-          </Stack>
-        </form>
         }
     </>
   )
