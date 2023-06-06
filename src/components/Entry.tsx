@@ -25,21 +25,32 @@ type EntryCurrentProps = BookEntry & ExtraProps
 const Entry= (props: EntryCurrentProps) => {
   let progressBarVal = (props.pagesRead / props.pageCount) * 100;
   const [isEditing, setEditing] = useState(false);
-  
-  // for form
-  const [listToAdd, setListToAdd] = useState(props.status);
-  const [newPageCount, setNewPageCount] = useState(props.pageCount);
-  const [newPagesRead, setNewPagesRead] = useState(props.pagesRead);
-  const [newUserRating, setNewUserRating] = useState(props.userRating);
-  const [newDateStart, setNewDateStart] = useState(props.dateStarted);
-  const [newDateFinished, setNewDateFinished] = useState(props.dateFinished);
 
+  const [formInputs, setFormInputs] = useState({
+    status: props.status,
+    pageCount: props.pageCount,
+    pagesRead: props.pagesRead,
+    userRating: props.userRating,
+    dateStart: props.dateStarted,
+    dateFinished: props.dateFinished
+  })
   
+  function handleFormChange(e: any) {
+    setFormInputs({
+        ...formInputs,
+        [e.target.name]: e.target.value
+    })
+  }
+
   useEffect(() => {
-    if (listToAdd === 'finished') {
-        setNewPagesRead(newPageCount)
+    if (formInputs.status === 'finished') {
+        // setNewPagesRead(newPageCount)
+        setFormInputs({
+          ...formInputs,
+          pagesRead: formInputs.pageCount
+      })
     } 
-  }, [listToAdd])
+  }, [formInputs.status])
 
   function handleSubmit(e:React.FormEvent) {
     setEditing(false);
@@ -48,12 +59,7 @@ const Entry= (props: EntryCurrentProps) => {
       // contains the unchanged info
       ...props, 
       // and the possibly updated stuff
-      userRating: newUserRating,
-      pageCount: newPageCount, 
-      pagesRead: newPagesRead, 
-      dateStarted: newDateStart, 
-      dateFinished: newDateFinished,
-      status: listToAdd,
+      ...formInputs
     }
     props.updateBook(updatedEntry);
   }
@@ -116,31 +122,34 @@ const Entry= (props: EntryCurrentProps) => {
         <form onSubmit={handleSubmit}>
           <Stack spacing={1} alignItems="flex-start">
           <Stack direction="row" spacing={1}>
-          { ['current', 'finished'].includes(listToAdd) &&
+          { ['current', 'finished'].includes(formInputs.status) &&
           <TextField
+              name="pagesRead"
               label="Pages Read"
               variant="outlined"
               type="number"
-              value={newPagesRead} 
-              onChange={(e) => setNewPagesRead(parseInt(e.target.value))}/>}
+              value={formInputs.pagesRead} 
+              onChange={handleFormChange}/>}
 
           <TextField
+              name="pageCount"
               label="Page Count"
               variant="outlined"
               type="number"
-              value={newPageCount} 
-              onChange={(e) => setNewPageCount(parseInt(e.target.value))}
+              value={formInputs.pageCount} 
+              onChange={handleFormChange}
           />
           </Stack>
           
           <FormControl sx={{width:"75%"}}>
               <InputLabel>Change status</InputLabel>
               <Select
+                  name="status"
                   labelId="select-list-label"
                   id="select-list"
-                  value={listToAdd}
+                  value={formInputs.status}
                   label="Select List"
-                  onChange={(e:any)=>setListToAdd(e.target.value)}>
+                  onChange={handleFormChange}>
                   <MenuItem value="current">Currently reading</MenuItem>
                   <MenuItem value="finished">Finished</MenuItem>
                   <MenuItem value="tbr">To be read</MenuItem>
@@ -148,31 +157,33 @@ const Entry= (props: EntryCurrentProps) => {
           </FormControl>
 
           <Stack direction="row" spacing={1}>
-            { ['current', 'finished'].includes(listToAdd) &&
+            { ['current', 'finished'].includes(formInputs.status) &&
             <TextField
+                name="dateStart"
                 label="Date started"
                 variant="outlined"
                 type="date"
-                value={newDateStart} 
-                onChange={(e) => setNewDateStart(e.target.value)}
+                value={formInputs.dateStart} 
+                onChange={handleFormChange}
                 InputLabelProps={{ shrink: true }}
                 />}
-            {listToAdd === 'finished' && 
+            {formInputs.status === 'finished' && 
                 <TextField
+                name="dateFinished"
                 label="Date finished"
                 variant="outlined"
                 type="date"
-                value={newDateFinished} 
-                onChange={(e) => setNewDateFinished(e.target.value)}
+                value={formInputs.dateFinished} 
+                onChange={handleFormChange}
                 InputLabelProps={{ shrink: true }}
                 />}
         </Stack>
 
           <Typography component="legend">Your rating</Typography>
           <Rating
-          name="simple-controlled"
-          value={newUserRating}
-          onChange={(e, newValue) => setNewUserRating(newValue)}
+          name="userRating"
+          value={formInputs.userRating}
+          onChange={handleFormChange}
           />
           
           <Button type="submit">Submit</Button>
