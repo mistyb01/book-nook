@@ -5,11 +5,11 @@ import { Rating, Typography } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import Button from "@mui/material/Button";
 import React, { useEffect, useState } from "react";
+import EntryEditor from "./EntryEditor";
 
 import { Stack } from "@mui/material";
 import DefaultCover from '../assets/defaultcover.png';
 
-import EntryEditor from "./EntryEditor";
 
 type ExtraProps = { 
   updateBook: Function,
@@ -93,7 +93,7 @@ const Entry= (props: EntryCurrentProps) => {
     <>       
         <Stack direction="row" spacing={2}>
           
-          {props.image ? <img src={props.image}/> : <img src={DefaultCover}/>}
+          {props.image ? <img src={props.image}/> : <img src={DefaultCover.src}/>}
           
           <Stack spacing={2} sx={{width: "100%"}}>
             <Box>
