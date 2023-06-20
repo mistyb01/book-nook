@@ -66,6 +66,9 @@ const theme = createTheme({
         styleOverrides: {
           root: {
             fontFamily: ['Varela Round', 'sans-serif'].join(','),
+            '&:focus': {
+              backgroundColor: 'pink'
+            },
           },
         },
         variants: [
