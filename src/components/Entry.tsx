@@ -10,26 +10,24 @@ import EntryEditor from "./EntryEditor";
 import { Stack } from "@mui/material";
 import DefaultCover from '../assets/defaultcover.png';
 
-
-type ExtraProps = { 
+type Props = { 
+  entryData: BookEntry,
   updateBook: Function,
   deleteBook: Function,
   entryType: string
 }
 
-type EntryCurrentProps = BookEntry & ExtraProps
-
-const Entry= (props: EntryCurrentProps) => {
-  let progressBarVal = (props.pagesRead / props.pageCount) * 100;
+const Entry= ({entryData, updateBook, deleteBook, entryType}: Props) => {
+  let progressBarVal = (entryData.pagesRead / entryData.pageCount) * 100;
   const [isEditing, setEditing] = useState(false);
 
   const [formInputs, setFormInputs] = useState({
-    status: props.status,
-    pageCount: props.pageCount,
-    pagesRead: props.pagesRead,
-    userRating: props.userRating,
-    dateStart: props.dateStarted,
-    dateFinished: props.dateFinished
+    status: entryData.status,
+    pageCount: entryData.pageCount,
+    pagesRead: entryData.pagesRead,
+    userRating: entryData.userRating,
+    dateStart: entryData.dateStarted,
+    dateFinished: entryData.dateFinished
   })
   
   function handleFormChange(e: any) {
@@ -53,11 +51,11 @@ const Entry= (props: EntryCurrentProps) => {
     e.preventDefault();
     const updatedEntry: BookEntry = {
       // contains the unchanged info
-      ...props, 
+      ...entryData, 
       // and the possibly updated stuff
       ...formInputs
     }
-    props.updateBook(updatedEntry);
+    updateBook(updatedEntry);
   }
 
   
@@ -67,7 +65,7 @@ const Entry= (props: EntryCurrentProps) => {
         <>
       <Box sx={{ display: "flex", alignItems: "center"}}>
         <Box sx={{ width: '100%', ml: 1 }}>
-          <Typography variant="body2">{props.pagesRead} / {props.pageCount} pages read</Typography>
+          <Typography variant="body2">{entryData.pagesRead} / {entryData.pageCount} pages read</Typography>
           <LinearProgress variant="determinate" sx={{ borderRadius: "5px", height: "10px"}} value={progressBarVal} />
         </Box>
       </Box>
@@ -78,14 +76,14 @@ const Entry= (props: EntryCurrentProps) => {
     function FinishedEntry() {
       return (
         <>
-        {props.dateFinished && <Typography>Finished {props.dateFinished}</Typography>}
+        {entryData.dateFinished && <Typography>Finished {entryData.dateFinished}</Typography>}
         </>
       )
     }
 
     function TbrEntry() {
       return (
-        <Typography variant='body2'>Date added: {props.dateAdded}</Typography>
+        <Typography variant='body2'>Date added: {entryData.dateAdded}</Typography>
       )
     }
 
@@ -93,19 +91,19 @@ const Entry= (props: EntryCurrentProps) => {
     <>       
         <Stack direction="row" spacing={2}>
           
-          {props.image ? <img src={props.image}/> : <img src={DefaultCover.src}/>}
+          {entryData.image ? <img src={entryData.image}/> : <img src={DefaultCover}/>}
           
           <Stack spacing={2} sx={{width: "100%"}}>
             <Box>
-              <Typography variant="entryHeader">{props.title}</Typography>
-              <Typography>{props.authors.join(', ')}</Typography>
+              <Typography variant="entryHeader">{entryData.title}</Typography>
+              <Typography>{entryData.authors.join(', ')}</Typography>
               <Divider variant="middle" />
             </Box>
-            {props.dateStarted && <Typography>Started {props.dateStarted}</Typography>} 
-            {props.entryType === 'current' ? <CurrentEntry/> :
-            props.entryType === 'finished' ? <FinishedEntry/> : 
+            {entryData.dateStarted && <Typography>Started {entryData.dateStarted}</Typography>} 
+            {entryType === 'current' ? <CurrentEntry/> :
+            entryType === 'finished' ? <FinishedEntry/> : 
             <TbrEntry/>}
-            {props.userRating ? <Typography>Rating: {'★'.repeat(props.userRating)}{'☆'.repeat(5-props.userRating)}</Typography> : ''}
+            {entryData.userRating ? <Typography>Rating: {'★'.repeat(entryData.userRating)}{'☆'.repeat(5-entryData.userRating)}</Typography> : ''}
             <Button size="small" variant="outlined" sx={{ 
               width: "min-content",
               height: "min-content"
@@ -116,10 +114,10 @@ const Entry= (props: EntryCurrentProps) => {
 
         {isEditing &&
           <EntryEditor
-            bookId={props.id}
+            bookId={entryData.id}
             handleFormSubmit={(e:any)=>handleSubmit(e)}
             handleFormChange={(e:any)=>handleFormChange(e)}
-            handleDelete={(id:string)=>props.deleteBook(id)}
+            handleDelete={(id:string)=>deleteBook(id)}
             formInputs={formInputs}
           />
         }

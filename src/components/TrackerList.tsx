@@ -8,7 +8,7 @@ interface Props {
     userBooks: BookEntry[] | undefined;
     listType: "current" | "finished" | "tbr",
     handleUserBookUpdate: Function,
-    handleBookDelete?: Function
+    handleBookDelete: Function
 }
 
 const EmptyListMessage = ({listType}:{listType:string}) => {
@@ -37,7 +37,7 @@ const TrackerList : React.FC<Props> = ({userBooks, listType, handleUserBookUpdat
         <Stack spacing={3}>
         {filteredBooks.map((book) => 
             <EntryCard key={book.id}>
-                <Entry key={book.id} {...book} entryType={listType}
+                <Entry key={book.id} entryData={book} entryType={listType}
                 updateBook={(updatedEntry:BookEntry)=>handleUserBookUpdate(updatedEntry)}
                 deleteBook={(book:BookEntry)=>handleBookDelete(book)} />
             </EntryCard>
