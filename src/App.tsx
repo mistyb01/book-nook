@@ -1,15 +1,12 @@
 import './App.css'
 import { Route, Routes,  } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
-import Logo from './components/Logo';
 import TrackerNav from './components/TrackerNav';
-import FloatingActionButton from './components/material-ui/FloatingActionButton';
 import TrackerList from './components/TrackerList';
 import AddEntry from './components/AddEntry';
 
 import theme from './components/material-ui/theme';
-import { Stack, ThemeProvider } from '@mui/material';
+import { Stack, ThemeProvider, Typography } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { useLocalStorage } from 'usehooks-ts';
@@ -53,8 +50,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
+      <div className="layout-container">
       <header>
-        <Logo/>
+        <Typography variant="logo">book nook</Typography>
       </header>
       <main>
         <Stack spacing={2}>
@@ -84,8 +82,8 @@ function App() {
           }/>
         </Routes>
         </Stack>
-        <Link to='/new'><FloatingActionButton/></Link>
       </main>
+      </div>
       </CssBaseline>
     </ThemeProvider>
   )

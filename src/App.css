@@ -5,9 +5,15 @@
     box-sizing: border-box;
 }
 
-main {
+.layout-container {
     width: 60vw;
-    margin: 2rem auto;
+    margin: auto;
 }
 
-header { text-align: center; }
+.layout-container > * + * {
+    margin-top: 1rem;
+}
+
+header { 
+    text-align: left; 
+}

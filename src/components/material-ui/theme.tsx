@@ -43,7 +43,7 @@ const theme = createTheme({
         },
         logo: {
             fontFamily: ['Darumadrop One', 'cursive'].join(','),
-            fontSize: '3rem',
+            fontSize: '2rem',
             color: '#cb4e6c',
             textDecoration: 'underline dotted 5px rgba(203, 78, 107, 0.3)',
         },
