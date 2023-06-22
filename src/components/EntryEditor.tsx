@@ -2,8 +2,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Stack, TextField } from "@mui/material";
-
+import { Box, Stack, TextField } from "@mui/material";
+import Divider from '@mui/material';
 import { Rating, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
@@ -29,29 +29,15 @@ type Props = {
 
 const EntryEditor = ({handleFormSubmit, handleFormChange, handleDelete, bookId, formInputs}: Props) => {
     return (
+        <Box sx={{
+            backgroundColor: 'white',
+            borderRadius: '3px',
+            padding: '1rem'
+        }}>
         <form onSubmit={handleFormSubmit}>
-          <Stack spacing={1} alignItems="flex-start">
-          <Stack direction="row" spacing={1}>
-          { ['current', 'finished'].includes(formInputs.status) &&
-          <TextField
-              name="pagesRead"
-              label="Pages Read"
-              variant="outlined"
-              type="number"
-              value={formInputs.pagesRead} 
-              onChange={handleFormChange}/>}
-
-          <TextField
-              name="pageCount"
-              label="Page Count"
-              variant="outlined"
-              type="number"
-              value={formInputs.pageCount} 
-              onChange={handleFormChange}
-          />
-          </Stack>
-          
-          <FormControl sx={{width:"75%"}}>
+          <Stack spacing={2} alignItems="flex-start">
+            <Typography variant="emphasis">Editing entry</Typography>
+          <FormControl sx={{width:"max-content"}}>
               <InputLabel>Change status</InputLabel>
               <Select
                   name="status"
@@ -89,6 +75,27 @@ const EntryEditor = ({handleFormSubmit, handleFormChange, handleDelete, bookId, 
                 />}
         </Stack>
 
+          <Stack direction="row" spacing={1}>
+          { ['current', 'finished'].includes(formInputs.status) &&
+          <TextField
+              name="pagesRead"
+              label="Pages Read"
+              variant="outlined"
+              type="number"
+              value={formInputs.pagesRead} 
+              onChange={handleFormChange}/>}
+
+          <TextField
+              name="pageCount"
+              label="Page Count"
+              variant="outlined"
+              type="number"
+              value={formInputs.pageCount} 
+              onChange={handleFormChange}
+          />
+          </Stack>
+          
+
           <Typography component="legend">Your rating</Typography>
           <Rating
           name="userRating"
@@ -100,6 +107,7 @@ const EntryEditor = ({handleFormSubmit, handleFormChange, handleDelete, bookId, 
           <Button onClick={()=>handleDelete(bookId)}>Delete book</Button>
           </Stack>
         </form>
+        </Box>
     )
 }
 

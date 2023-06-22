@@ -9,8 +9,11 @@ type Props = {
 
 const SearchResult = ({book, handleSetSelectedBook}: Props) => {
     return (
-        <Card variant="outlined" key={book.id}  sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Stack direction="row" spacing={2}>
+        <Card variant="outlined" key={book.id}  sx={{ 
+            display: 'flex', 
+            flexDirection: {xs: 'column', sm: 'row'}, 
+            justifyContent: 'space-between' }}>
+            <Stack direction={{xs: "column", sm: "row"}} spacing={2}>
                 <img src={book.image}/>
                 <CardContent>
                     <Typography variant="entryHeader">{book.title}</Typography>

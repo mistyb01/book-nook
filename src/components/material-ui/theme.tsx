@@ -67,7 +67,7 @@ const theme = createTheme({
           root: {
             fontFamily: ['Varela Round', 'sans-serif'].join(','),
             '&:focus': {
-              backgroundColor: 'pink'
+              borderBottom: '2px solid rgba(70,0,19,0.87)'
             },
           },
         },

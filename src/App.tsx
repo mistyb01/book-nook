@@ -52,7 +52,9 @@ function App() {
       <CssBaseline>
       <div className="layout-container">
       <header>
+        <Stack direction="row" justifyContent="center">
         <Typography variant="logo">book nook</Typography>
+        </Stack>
       </header>
       <main>
         <Stack spacing={2}>

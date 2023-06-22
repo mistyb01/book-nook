@@ -10,10 +10,13 @@
     margin: auto;
 }
 
+@media (max-width: 768px) {
+.layout-container {
+    width: 95%;
+    margin: auto;
+}
+    
+}
 .layout-container > * + * {
     margin-top: 1rem;
-}
-
-header { 
-    text-align: left; 
 }
